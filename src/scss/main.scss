@@ -1,0 +1,269 @@
+@import 'variables';
+
+#searcher{   
+    background-color: $light_grey; 
+    
+    > .top {
+        width: 100%;
+        background-color: white;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
+
+        > div {
+            -webkit-box-sizing: border-box;
+                    box-sizing: border-box;
+            max-width: $max_width;
+            min-width: $max_width;
+            margin: auto;
+            padding: 0 150px;
+
+            > .search{
+                margin: 25px 0 20px 0;
+                width: 100%;
+                
+                > .input-search{
+                    -webkit-box-sizing: border-box;
+                            box-sizing: border-box;
+                    width: 300px;
+                    border: 1px solid $dark-blue;
+                    position: relative;
+                    color: $black_2;
+
+                    > i{
+                        position: absolute;
+                        top: 7px;
+                        right: 6px;
+                    }
+
+                    > input[type=text] {
+                        -webkit-box-sizing: inherit;
+                                box-sizing: inherit;
+                        width: 100%;
+                        border: none;
+                        padding: 5px 30px 5px 15px;
+                        font-family: $font-futurapt-obl;
+                        font-size: $font-size-default;
+                        text-align: left;
+                    }
+                }
+            }
+
+            > .data {
+                width: 100%;
+                height: 60px;
+                margin-bottom: 10px;
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-orient: horizontal;
+                -webkit-box-direction: normal;
+                    -ms-flex-direction: row;
+                        flex-direction: row;
+                -webkit-box-align: center;
+                    -ms-flex-align: center;
+                        align-items: center;
+
+                > h3{
+                    -webkit-box-flex: 1;
+                        -ms-flex-positive: 1;
+                            flex-grow: 1;
+                    text-align: left;
+                }
+
+                > aside {
+                    -webkit-box-flex: 1;
+                        -ms-flex-positive: 1;
+                            flex-grow: 1;
+                    text-align: right;
+                }
+            }
+        }
+    }
+
+    > .content {
+        -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+        max-width: $max_width;
+        margin: auto;
+        padding: 0 150px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+                flex-direction: row;
+
+        > .facets {
+            -webkit-box-ordinal-group: 1;
+                -ms-flex-order: 0;
+                    order: 0;
+            max-width: 400px;
+            min-width: 250px;
+
+            > .facet{
+                width: 100%;
+                font-family: $font-futurapt;
+
+                > h5 {
+                    -webkit-box-sizing: border-box;
+                            box-sizing: border-box;
+                    background-color: $grey;
+                    font-size: $font-size-big;
+                    font-weight: 300;
+                    width: 100%;
+                    height: 50px;
+                    line-height: 50px;
+                    margin: 0;
+                    padding: 0 15px;
+                }
+
+                > ul {
+                    background-color: white;
+                    margin: 0;
+                    padding: 0;
+                    list-style: none;
+                    
+                    > li {
+                        border-bottom: 1px solid $light-grey;
+                        > label{
+                            display: block;
+                            padding: 10px 25px;
+
+                            > input{
+                                display: none;
+                            }
+                        }
+                    }
+                }
+            }    
+        }
+
+        > .results {
+            -webkit-box-flex: 1;
+                -ms-flex-positive: 1;
+                    flex-grow: 1;
+
+            > .items-list {
+                -webkit-box-sizing: border-box;
+                        box-sizing: border-box;
+                width: 100%;
+                padding: 20px 10px 0 10px; 
+                list-style: none;
+                
+                > li {
+                    -webkit-box-sizing: border-box;
+                            box-sizing: border-box;
+                    width: 100%;
+                    height: 154px;
+                    background-color: white;
+                    margin-bottom: 16px;
+                    font-family: $font-futurapt;
+                    padding: 20px; 
+                    -webkit-box-shadow: 4px 0px 13px -7px rgba(0,0,0,0); 
+                            box-shadow: 4px 0px 13px -7px rgba(0,0,0,0);
+                    -webkit-transition: -webkit-box-shadow 0.3s ease-in-out;
+                    transition: -webkit-box-shadow 0.3s ease-in-out;
+                    transition: box-shadow 0.3s ease-in-out;
+                    transition: box-shadow 0.3s ease-in-out, -webkit-box-shadow 0.3s ease-in-out;
+
+                    &:last-child{
+                        margin-bottom: 0;
+                    }
+
+                    &:hover{
+                        -webkit-box-shadow: 4px 0px 13px -7px rgba(0,0,0,0.75);
+                                box-shadow: 4px 0px 13px -7px rgba(0,0,0,0.75);
+                    }
+
+                    > .header {
+                        height: 24px;
+                        line-height: 24px;
+                        margin-bottom: 10px;
+                        font-size: $font-size-ultra;
+
+                        > a {
+                            color: inherit;
+                            text-decoration: none;
+                        }
+                    }
+                    
+                    > .body {
+                        list-style: none;
+                        padding: 0;
+
+                        > li {
+                            > b {
+                                font-weight: 300;
+                            }
+                        }
+                    }
+                }               
+            }
+
+            > .pagination {
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                
+                > .pagination{
+                    display: -webkit-box;
+                    display: -ms-flexbox;
+                    display: flex;
+                    -webkit-box-orient: horizontal;
+                    -webkit-box-direction: normal;
+                        -ms-flex-direction: row;
+                            flex-direction: row;
+                    list-style: none;                
+                    margin: 47px auto;
+                    padding: 0;
+
+                    > li {
+                        font-family: $font-futurapt;
+                        font-size: $font-size-big;
+                        font-weight: 300;
+                        line-height: 30px;
+                        color: $black_4;
+                        height: 30px;
+                        width: auto;
+                        min-width: 30px;
+                        margin: 0 5px;
+                        padding: 0 5px;
+                        text-align: center;
+                        background-color: transparent;
+                        -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.0);
+                                box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.0);
+                        -webkit-transition: background-color 0.3s ease-in-out, -webkit-box-shadow 0.3s ease-in-out;
+                        transition: background-color 0.3s ease-in-out, -webkit-box-shadow 0.3s ease-in-out;
+                        transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+                        transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, -webkit-box-shadow 0.3s ease-in-out;
+
+                        &.active{
+                            border-radius: 2px;
+                            background-color: white;
+                            -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+                                    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+                            color: $orange;
+                        }
+
+                        > a {
+                            color: inherit;
+                            text-decoration: none;
+                            -webkit-transition: color 0.3s ease-in-out;
+                            transition: color 0.3s ease-in-out;
+
+                            &:hover{
+                                color: $orange;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

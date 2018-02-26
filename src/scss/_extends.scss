@@ -1,0 +1,24 @@
+%clearfix {
+    *zoom: 1;
+    &:before,
+    &:after {
+        display: table;
+        content: "";
+        // Fixes Opera/contenteditable bug:
+        // http://nicolasgallagher.com/micro-clearfix-hack/#comment-36952
+        line-height: 0;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+%img-cover{       
+    z-index: 1;
+    position: absolute;
+    top: -9999px;right: -9999px;
+    bottom: -9999px;left: -9999px;
+    margin: auto;
+    min-width: 100%;
+    min-height: 100%;
+}

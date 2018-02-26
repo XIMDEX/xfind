@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./static/css/searcher.min.css">
+
+    <link href="./css/fontawesome-all.min.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+    <script src="./static/js/menu.js"></script>
+</head>
+
+<body>
+    <header class="desktop">
+        <div class="top">
+            <a class="logo" href="index.html" title="web AGPD">
+                <img src="./static/assets/agpd-logo.svg" alt="logo AGPD" longdesc="Agencia española de protección de datos">
+            </a>
+            <aside>
+                <div class="search">
+                    <input type="text" name="search" title="Buscar" placeholder="Buscar">
+                </div>
+                <button type="submit">Sede Electrónica</button>
+            </aside>
+            <aside>
+                <div class="dropdown">
+                    <p>Castellano
+                        <i class="fas fa-angle-down"></i>
+                    </p>
+                    <ul class='dropdown-options'>
+                        <li>
+                            <a href="#en" title="Ingles">Ingles</a>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+        <nav class="bottom">
+            <ul>
+                <li class="selected">
+                    <a href="./static/ficha.html">Inicio</a>
+                </li>
+                <li>
+                    <a href="./static/ficha.html">La Agencia</a>
+                    <ul>
+                        <li>
+                            <a href="./static/ficha.html">Bienvenida a la Agencia</a>
+                        </li>
+                        <li>
+                            <a href="./static/ficha.html">Funciones</a>
+                        </li>
+                        <li>
+                            <a href="./static/ficha.html">Historia</a>
+                        </li>
+                        <li>
+                            <a href="./static/ficha.html">Comparecencias</a>
+                        </li>
+                        <li>
+                            <a href="./static/ficha.html">Agenda</a>
+                        </li>
+                        <li>
+                            <a href="./static/ficha.html">El blog de la Agenda</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="./static/ficha.html">Nuevo reglamento</a>
+                </li>
+                <li>
+                    <a href="./static/ficha.html">Áreas de actuación</a>
+                </li>
+                <li>
+                    <a href="./static/ficha.html">Informes y resoluciones</a>
+                </li>
+                <li>
+                    <a href="./static/ficha.html">Guías y herramientas</a>
+                </li>
+                <li>
+                    <a href="./static/ficha.html">Internacional</a>
+                </li>
+                <li>
+                    <a href="./static/ficha.html">Prensa y comunicación</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <header class="mobile">
+        <div class="top">
+            <a class="logo" href="index.html" title="web AGPD">
+                <img src="./static/assets/agpd-logo.svg" alt="Agencia española de protección de datos">
+            </a>
+            <aside>
+                <button>
+                    <i class="fas fa-search"></i>
+                    <span>BUSCAR</span>
+                </button>
+            </aside>
+            <aside>
+                <button class="menu">
+                    <i class="fas fa-bars"></i>
+                    <span>MENU</span>
+                </button>
+            </aside>
+        </div>
+        <nav class="bottom">
+            <aside class="actions">
+                <div class="dropdown">
+                    <!-- TODO langs -->
+                </div>
+                <button type="submit">Sede Electrónica</button>
+            </aside>
+            <ul>
+                <li class="selected">
+                    <a href="./static/ficha.html">Inicio</a>
+                </li>
+                <li>
+                    <a href="./static/ficha.html" class="dropdown">La Agencia
+                        <i class="fas fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-list">
+                        <li>
+                            <a href="./static/ficha.html">Bienvenida a la Agencia</a>
+                        </li>
+                        <li>
+                            <a href="./static/ficha.html">Funciones</a>
+                        </li>
+                        <li>
+                            <a href="./static/ficha.html">Historia</a>
+                        </li>
+                        <li>
+                            <a href="./static/ficha.html">Comparecencias</a>
+                        </li>
+                        <li>
+                            <a href="./static/ficha.html">Agenda</a>
+                        </li>
+                        <li>
+                            <a href="./static/ficha.html">El blog de la Agenda</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="./static/ficha.html">Nuevo reglamento</a>
+                </li>
+                <li>
+                    <a href="./static/ficha.html">Áreas de actuación</a>
+                </li>
+                <li>
+                    <a href="./static/ficha.html">Informes y resoluciones</a>
+                </li>
+                <li>
+                    <a href="./static/ficha.html">Guías y herramientas</a>
+                </li>
+                <li>
+                    <a href="./static/ficha.html">Internacional</a>
+                </li>
+                <li>
+                    <a href="./static/ficha.html">Prensa y comunicación</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div id="app"></div>
+    </main>
+    <footer>
+        <section class="top">
+            <ul>
+                <li>
+                    <div class="logo">
+                        <img src="./static/assets/agpd-logo2.png" alt="logo agpd">
+                    </div>
+                </li>
+                <li>
+                    <div class="direction">
+                        <p>
+                            C/ Jorge Juan, 6. 28001 - Madrid
+                            <span>Tel.
+                                <a href="tel:901100099">901 100 099</a> -
+                                <a href="tel:912663517">912 663 517</a>
+                            </span>
+                        </p>
+                        <ul>
+                            <li>
+                                <a href="" title="">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" title="">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" title="">
+                                    <i class="fab fa-google-plus-g"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" title="">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <div class="links">
+                        <a href="./static/ficha.html">Enlaces de Interés</a>
+                        <a href="./static/ficha.html">Preguntas frecuentes</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="europ">
+                        <img src="./static/assets/union-europea.png" alt="logo union europea">
+                    </div>
+                </li>
+            </ul>
+        </section>
+        <section class="bottom">
+            <ul>
+                <li>
+                    <a href="./static/ficha.html">Política de privacidad y aviso legal</a>
+                </li>
+                <li>
+                    <a href="./static/ficha.html">Aviso de seguridad</a>
+                </li>
+                <li>
+                    <a href="./static/ficha.html">Requisitos técnicos</a>
+                </li>
+                <li>
+                    <a href="./static/ficha.html">Traductor automático</a>
+                </li>
+            </ul>
+        </section>
+    </footer>
+    <!-- built files will be auto injected -->
+</body>
+
+</html>

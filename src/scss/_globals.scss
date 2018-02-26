@@ -1,0 +1,33 @@
+.button{
+    $width: 300px;
+    $height: 48px;
+
+    width: $width;
+    height: $height;
+    display: block;
+    box-sizing: border-box;
+    font-family: $font-futurapt;
+    font-weight: normal;
+    font-size: $font-size-default;
+    letter-spacing: 0.9px;
+    text-align: center;
+    line-height: $height;
+    color: white;
+    border: solid 2px $orange;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, color 0.3s ease-in-out;
+
+    &:hover {
+        background-color: $orange;
+    }
+
+    &.solid{
+        background-color: $orange;
+
+        &:hover {
+            background-color: transparent;
+            color: $orange;
+        }
+    }
+}

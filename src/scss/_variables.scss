@@ -1,0 +1,42 @@
+$light_grey: #f3f3f3;
+$background-default-color-ligth: #FFFFFF;
+
+$border-gray-ligthen-color: rgba(69, 77, 82, 0.3);
+$orange: #e27000;
+$orange-light: #f78819;
+$light-grey: #f3f3f3;
+$grey: #e8e8e8;
+$warm-grey: #767676;
+$warm-grey2: #979797;
+$dark-blue: #454d52;
+$dark-grey: #d1d1d1;
+$darkest-grey: #545454;
+$black: #1c1c1b;
+$black_2: #353535;
+$black_3: #2f3538;
+$black_4: #4b4b4b;
+
+$font-futurapt: 'Source Sans Pro', sans-serif;
+$font-futurapt-obl: 'Source Sans Pro', sans-serif;
+
+
+$font-size-smaller: 10px;
+$font-size-small: 14px;
+$font-size-default: 16px;
+$font-size-big: 18px;
+$font-size-ultra: 20px;
+$title-small: 24px;
+$title-medium-small: 30px;
+$title-medium: 40px;
+$title-big: 48px;
+
+$max_width: 1440px;
+$desktop-break: $max_width;
+$medium-break: 1200px;
+$tablet-break: 1024px;
+$mobile-break: 800px;
+
+//MEDIAS
+@import './mixins';
+@import './extends';
+@import './globals';
