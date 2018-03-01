@@ -10,9 +10,17 @@ use Psr\Container\ContainerInterface;
 class ItemController
 {
     protected $className = '\Xfind\models\Item';
-    private $request;
-    private $response;
-    private $model = null;
+    protected $request;
+    protected $response;
+    protected $model = null;
+
+
+    public static $paramsToModel =[
+        'query' => 'setQuery',
+        'limit' => 'setLimitPerPage',
+        'start' => 'setStart',
+        'page' => 'setPage'
+    ];
 
     public function __construct(ContainerInterface $container)
     {
@@ -46,16 +54,26 @@ class ItemController
         $params = [
             'query' => '*:*',
             'limit' => 20,
-            'start' => 0
+            'start' => 0,
+            'page' => 1
         ];
 
         foreach ($params as $param => $value) {
             if (array_key_exists($param, $queryParams)) {
                 $params[$param] = $queryParams[$param];
+                $this->setQueryParamsToModel($param, $queryParams[$param]);
             }
         }
 
         return $params;
+    }
+
+    private function setQueryParamsToModel($param, $value)
+    {
+        if (array_key_exists($param, static::$paramsToModel)) {
+            $func = static::$paramsToModel[$param];
+            $this->model->$func($value);
+        }
     }
 
     protected function setResponse($data = [], $json = false)

@@ -7,7 +7,11 @@ use Slim\Http\Request;
 use Xfind\models\Item;
 use Slim\Http\Response;
 
-$api = new Slim();
+$api = new Slim([
+    'settings' => [
+        'displayErrorDetails' => true
+    ]
+]);
 
 $api->get('/test', function (Request $request, Response $response, $args = []) {
     $status = $response->getStatusCode();
@@ -66,5 +70,6 @@ $api->get('/ping', function (Request $request, Response $response, $args = []) {
 });
 
 $api->get('/', '\Xfind\controllers\ItemController:index')->setName('index');
+$api->get('/resoluciones', '\Xfind\controllers\ResolutionController:index')->setName('resolution');
 
 $api->run();

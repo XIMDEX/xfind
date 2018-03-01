@@ -122,8 +122,14 @@ class Solr extends SolrClient
         }
         $result = $this->execute($this->query, $endpoint);
 
-        $data = $result->getResponse();
-        $response = json_decode($data->getBody(), true);
+        $data = $result->getResponse()->getBody();
+        $facets = $result->getFacetSet()->getFacets();
+        $resultFacet = [];
+        foreach ($facets as $facet => $value) {
+            $resultFacet[$facet] = $value->getValue();
+        }
+
+        $response = json_decode($data, true);
 
         return (array_key_exists('response', $response)) ? $response['response'] : $response;
     }
@@ -149,6 +155,14 @@ class Solr extends SolrClient
     public function fields(array $fields)
     {
         $this->query->setFields($fields);
+        return $this;
+    }
+
+    public function facet($facet, $options)
+    {
+        $this->query->getFacetSet()
+            ->createFacetQuery($facet)
+            ->setQuery($options);
         return $this;
     }
 }
