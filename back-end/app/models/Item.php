@@ -114,6 +114,13 @@ class Item
         return $this->start;
     }
 
+    public function facets(array $facets = null)
+    {
+        if (is_null($facets)) {
+            $facets = $this->facets;
+        }
+    }
+
     public function find($query = null)
     {
         if (is_null($query)) {
@@ -123,7 +130,23 @@ class Item
         $this->solarium
             ->selectQuery($query);
 
+        foreach ($this->facets as $facet) {
+            $this->facet($facet, $query);
+        }
+
         return $this;
+    }
+
+    public function one($query)
+    {
+        $result = $this->find($query)
+            ->get();
+
+        if (count($result) > 0 && isset($result['docs'])) {
+            return $result['docs'][0];
+        }
+
+        return [];
     }
 
     public function get()

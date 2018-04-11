@@ -83,9 +83,9 @@ class ItemController
         $message = $this->response->getReasonPhrase();
 
         $response = [
-            'status' => 200,
+            'status' => $status,
             'data' => $data,
-            'message' => ''
+            'message' => $message
         ];
 
         return ($json) ? json_encode($response) : $response;

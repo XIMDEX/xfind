@@ -134,8 +134,13 @@ class Solr extends SolrClient
         }
 
         $response = json_decode($data, true);
+        
+        if (array_key_exists('response', $response)) {
+            $response = $response['response'];
+        }
+        $response['facets'] = $resultFacet;
 
-        return (array_key_exists('response', $response)) ? $response['response'] : $response;
+        return $response;
     }
 
     public function selectQuery(string $queryArgs = '*:*')
