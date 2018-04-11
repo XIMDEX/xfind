@@ -4,12 +4,12 @@ namespace Xfind\models;
 
 class News extends Item
 {
-
     const TYPE = 'noticia';
 
     public function __construct()
     {
         $this->fields += [
+            'slug',
             'author',
             'content_flat',
             'content_render',

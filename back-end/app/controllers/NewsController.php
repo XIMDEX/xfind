@@ -11,14 +11,26 @@ class NewsController extends ItemController
     public function index()
     {
         $params = $this->getQueryParams();
-        $data = ['facets' => $this->getFacets()] +
-            $this->model->find()->paginate();
+        $data = $this->model->find()->paginate();
 
         $result = $this->response->withHeader(
             'Content-Type',
             'application/json'
         )->write($this->setResponse($data, true));
 
+        return $result;
+    }
+
+    public function show($request)
+    {
+        $url = $request->getAttribute('url');
+
+        $data = $this->model->one("slug:{$url}");
+
+        $result = $this->response->withHeader(
+            'Content-Type',
+            'application/json'
+        )->write($this->setResponse($data, true));
         return $result;
     }
 }

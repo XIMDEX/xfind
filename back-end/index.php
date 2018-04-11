@@ -72,5 +72,6 @@ $api->get('/ping', function (Request $request, Response $response, $args = []) {
 $api->get('/', '\Xfind\controllers\ItemController:index')->setName('index');
 $api->get('/resoluciones', '\Xfind\controllers\ResolutionController:index')->setName('resolution');
 $api->get('/noticias', '\Xfind\controllers\NewsController:index')->setName('news');
+$api->get('/noticias/{url}', '\Xfind\controllers\NewsController:show')->setName('news_show');
 
 $api->run();
