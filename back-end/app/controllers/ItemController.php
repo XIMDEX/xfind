@@ -15,7 +15,7 @@ class ItemController
     protected $model = null;
 
 
-    public static $paramsToModel =[
+    public static $paramsToModel = [
         'query' => 'setQuery',
         'limit' => 'setLimitPerPage',
         'start' => 'setStart',
@@ -33,8 +33,9 @@ class ItemController
     {
         $params = $this->getQueryParams();
 
-        $data = ['facets' => $this->getFacets()] + $this->model->find($params['query'])->limit($params['limit'], $params['start'])->obtain();
-        
+        $data = ['facets' => $this->getFacets()] + $this->model
+                ->find($params['query'])->limit($params['limit'], $params['start'])->get();
+
         $result = $this->response->withHeader(
             'Content-Type',
             'application/json'
@@ -80,13 +81,13 @@ class ItemController
     {
         $status = $this->response->getStatusCode();
         $message = $this->response->getReasonPhrase();
-        
+
         $response = [
             'status' => 200,
             'data' => $data,
             'message' => ''
         ];
 
-        return ($json)? json_encode($response) : $response;
+        return ($json) ? json_encode($response) : $response;
     }
 }

@@ -7,16 +7,17 @@ use core\Solr;
 class Item
 {
     protected $limitPerPage = 20;
-    protected $page = 1;
+    protected $page = 0;
     protected $start = 0;
     protected $query = '*:*';
-    
-    protected $facets = [
+
+    protected $fields = [
         'id',
-        'tipodocumento_s',
-        'fechafirma_rdt',
-        'attr_contentfile'
+        'creation_date',
+        'update_date',
     ];
+
+    protected $facets = [];
 
     private $solarium;
 
@@ -118,7 +119,7 @@ class Item
         if (is_null($query)) {
             $query = $this->query;
         }
-        
+
         $this->solarium
             ->selectQuery($query);
 
@@ -166,7 +167,7 @@ class Item
         if (is_null($page)) {
             $page = $this->page;
         }
-        
+
         $result = $this->solarium->limit($this->limitPerPage, $page)->obtain();
 
         $total = $result['numFound'];
@@ -177,8 +178,8 @@ class Item
             'total' => $total,
             'pages' => $pages,
             'page' => $page,
-            'next' => ($next >= $pages)? $pages : $next,
-            'prev' => ($prev <= 0)? 1 : $prev
+            'next' => ($next >= $pages) ? $pages : $next,
+            'prev' => ($prev <= 0) ? 1 : $prev
         ];
 
         $result += ['pager' => $pager];

@@ -32,9 +32,9 @@ $api->get('/test', function (Request $request, Response $response, $args = []) {
     $solr = new Item();
 
     $data = [
-        'status'=> $status,
-        'data'=> $solr->find($query)->limit($limit)->obtain(),
-        'message'=> $message
+        'status' => $status,
+        'data' => $solr->find($query)->limit($limit)->get(),
+        'message' => $message
     ];
 
 
@@ -54,9 +54,9 @@ $api->get('/ping', function (Request $request, Response $response, $args = []) {
     $solr = new Item();
 
     $data = [
-        'status'=> $status,
-        'data'=> $solr->ping(),
-        'message'=> $message
+        'status' => $status,
+        'data' => $solr->ping(),
+        'message' => $message
     ];
 
 
@@ -71,5 +71,6 @@ $api->get('/ping', function (Request $request, Response $response, $args = []) {
 
 $api->get('/', '\Xfind\controllers\ItemController:index')->setName('index');
 $api->get('/resoluciones', '\Xfind\controllers\ResolutionController:index')->setName('resolution');
+$api->get('/noticias', '\Xfind\controllers\NewsController:index')->setName('news');
 
 $api->run();

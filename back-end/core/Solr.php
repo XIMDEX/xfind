@@ -3,7 +3,9 @@
 namespace core;
 
 use core\Config;
+use Solarium\Core\Client\Endpoint;
 use Solarium\Core\Query\QueryInterface;
+use Solarium\Core\Query\Result\ResultInterface;
 use Solarium\Exception as SolrException;
 use Solarium\Core\Client\Client as SolrClient;
 
@@ -54,6 +56,7 @@ class Solr extends SolrClient
     {
         return $this->query;
     }
+
 
     public function test()
     {
@@ -110,7 +113,7 @@ class Solr extends SolrClient
     /**
      * Execute a query.
      *
-     * @param QueryInterface       $query
+     * @param QueryInterface $query
      * @param Endpoint|string|null $endpoint
      *
      * @return ResultInterface
@@ -120,10 +123,11 @@ class Solr extends SolrClient
         if (!is_null($query)) {
             $this->query = $query;
         }
+
         $result = $this->execute($this->query, $endpoint);
 
         $data = $result->getResponse()->getBody();
-        $facets = $result->getFacetSet()->getFacets();
+        $facets = $result->getFacetSet() ? $result->getFacetSet()->getFacets() : [];
         $resultFacet = [];
         foreach ($facets as $facet => $value) {
             $resultFacet[$facet] = $value->getValue();
