@@ -1,5 +1,0 @@
-[SOLR]
-solr_host=
-solr_port=8983
-solr_path=/solr/
-solr_core=
