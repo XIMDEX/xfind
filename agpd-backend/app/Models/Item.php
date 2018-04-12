@@ -154,6 +154,21 @@ class Item
         return $this->solarium->obtain();
     }
 
+    public function createOrUpdate($data)
+    {
+        $update = $this->solarium->createUpdate();
+
+        $doc = $update->createDocument();
+        foreach ($data as $key => $value) {
+            $doc->$key = $value;
+        }
+
+        $update->addDocument($doc);
+        $update->addCommit();
+        $result = $this->solarium->update($update);
+        return $result->getResponse()->getStatusCode() == 200;
+    }
+
     public function ping()
     {
         return $this->solarium->test();
