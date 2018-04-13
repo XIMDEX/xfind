@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\api;
 
-
+use Illuminate\Routing\Controller;
 use App\Http\Models\Item;
 use Illuminate\Support\Facades\Request;
 
-class ItemController
+class ItemController extends Controller
 {
     protected $request;
     protected $response;
@@ -31,7 +31,7 @@ class ItemController
         $params = $this->getQueryParams();
 
         $data = ['facets' => $this->getFacets()] + $this->model
-                ->find($params['query'])->limit($params['limit'], $params['start'])->get();
+                ->find($params['query'])->paginate();
 
         return $data;
     }
@@ -45,18 +45,24 @@ class ItemController
     {
         $queryParams = Request::all();
         $params = [
-            'query' => '*:*',
             'limit' => 20,
             'start' => 0,
             'page' => 1
         ];
 
-        foreach ($params as $param => $value) {
-            if (array_key_exists($param, $queryParams)) {
+        $query = [];
+
+        foreach ($queryParams as $param => $value) {
+            if (array_key_exists($param, $params)) {
                 $params[$param] = $queryParams[$param];
                 $this->setQueryParamsToModel($param, $queryParams[$param]);
+            } else if (in_array($param, $this->model->getFacets())) {
+                $query[] = "$param:$value";
             }
         }
+
+        $query = count($query) > 0 ? implode($query, " AND ") : "*:*";
+        $this->setQueryParamsToModel('query', $query);
 
         return $params;
     }

@@ -13,7 +13,7 @@ class NewsRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,17 @@ class NewsRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'id' => 'required',
+            'slug' => 'required|string|min:1',
+            'author' => 'required|string|min:1',
+            'content_flat' => 'nullable|string',
+            'content_render' => 'nullable|string',
+            'date' => 'required|date',
+            'name' => 'required|string|min:1',
+            'section' => 'nullable|string',
+            'state' => 'required|string',
+            'tags' => 'nullable|array|min:0',
+            'type' => 'required|string|min:1',
         ];
     }
 }

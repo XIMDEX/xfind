@@ -169,6 +169,14 @@ class Item
         return $result->getResponse()->getStatusCode() == 200;
     }
 
+    public function delete($id)
+    {
+        $delete = $this->solarium->createUpdate();
+        $delete->addDeleteById($id);
+        $delete->addCommit();
+        return $this->solarium->update($delete);
+    }
+
     public function ping()
     {
         return $this->solarium->test();
@@ -205,8 +213,11 @@ class Item
         if (is_null($page)) {
             $page = $this->page;
         }
+        if ($page > 0)
+            $page -= 1;
 
-        $result = $this->solarium->limit($this->limitPerPage, $page)->obtain();
+
+        $result = $this->solarium->limit($this->limitPerPage, $this->start + ($this->limitPerPage * $page))->obtain();
 
         $total = $result['numFound'];
         $pages = ceil($total / $this->limitPerPage);

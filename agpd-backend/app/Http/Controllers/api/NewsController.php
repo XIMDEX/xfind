@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\api;
 
-use Solarium\Client;
+use App\Http\Models\News;
+use Illuminate\Support\Facades\Request;
 
 class NewsController extends ItemController
 {
 
-    protected $className = '\Xfind\models\News';
+    /** @var News */
+    protected $model = News::class;
 
     public function index()
     {
@@ -21,27 +23,34 @@ class NewsController extends ItemController
         $data = $this->model->one("slug:{$slug}");
 
         if (!$data) {
-            abort(404);
+            return response('News not found', 404);
         }
 
         return $data;
     }
 
+    public function create()
+    {
+        $data = Request::json()->all();
+        $result = $this->model->createOrUpdate($data);
+
+        $res = $result ? ['created', 201] : ['fail', 400];
+        return response($res[0], $res[1]);
+    }
+
     public function update()
     {
+        $data = Request::json()->all();
+        $result = $this->model->createOrUpdate($data);
 
-        $this->model->createOrUpdate([
-            "id" => "5",
-            "slug" => "test_noticia",
-            "type" => "noticia",
-            "author" => "Autor 1",
-            "content_flat" => "Texto plano",
-            "content_render" => "<p>Texto html</p>",
-            "date" => "2018-03-03T01:20:23Z",
-            "name" => "Esta noticia tiene nombre",
-            "section" => "Seccion",
-            "state" => "publish",
-            "tags" => ["Tag1", "Tag2"]
-        ]);
+        $res = $result ? ['updated', 200] : ['fail', 400];
+        return response($res[0], $res[1]);
+    }
+
+    public function delete($id)
+    {
+        $result = $this->model->delete($id);
+        $res = $result ? ['deleted', 200] : ['fail', 400];
+        return response($res[0], $res[1]);
     }
 }
