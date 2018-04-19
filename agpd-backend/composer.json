@@ -12,7 +12,8 @@
     "fideloper/proxy": "^4.0",
     "laravel/framework": "5.6.*",
     "laravel/tinker": "^1.0",
-    "solarium/solarium": "4.*"
+    "solarium/solarium": "4.*",
+    "tucker-eric/laravel-xml-middleware": "^1.0"
   },
   "require-dev": {
     "filp/whoops": "^2.0",

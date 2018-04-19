@@ -94,6 +94,15 @@ class Item
         return $this->facets;
     }
 
+
+    /**
+     * Get the value of facets
+     */
+    public function getFields()
+    {
+        return $this->fields;
+    }
+
     /**
      * Set the value of start
      *
@@ -159,6 +168,11 @@ class Item
         $update = $this->solarium->createUpdate();
 
         $doc = $update->createDocument();
+
+        $data = array_filter($data, function ($val) {
+            return in_array($val, self::getFields());
+        }, ARRAY_FILTER_USE_KEY);
+
         foreach ($data as $key => $value) {
             $doc->$key = $value;
         }

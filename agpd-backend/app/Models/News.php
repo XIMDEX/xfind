@@ -8,7 +8,7 @@ class News extends Item
 
     public function __construct()
     {
-        $this->fields += [
+        $this->fields = array_merge($this->fields, [
             'slug',
             'author',
             'content_flat',
@@ -21,19 +21,18 @@ class News extends Item
             'state',
             'tags',
             'type',
-        ];
+        ]);
 
-        $this->facets += [
+        $this->facets = array_merge($this->facets, [
             'author',
             'date',
             'section',
             'state',
             'tags'
-        ];
+        ]);
 
         parent::__construct();
     }
-
 
     public function find($query = null)
     {

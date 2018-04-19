@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Models\News;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 
 class NewsController extends ItemController
 {
@@ -29,18 +29,24 @@ class NewsController extends ItemController
         return $data;
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        $data = Request::json()->all();
+        $data = $request->all();
+        if (!$data) // IF not xml try with json
+            $data = $request->json()->all();
+
         $result = $this->model->createOrUpdate($data);
 
         $res = $result ? ['created', 201] : ['fail', 400];
         return response($res[0], $res[1]);
     }
 
-    public function update()
+    public function update(Request $request)
     {
-        $data = Request::json()->all();
+        $data = $request->all();
+        if (!$data) // IF not xml try with json
+            $data = $request->json()->all();
+
         $result = $this->model->createOrUpdate($data);
 
         $res = $result ? ['updated', 200] : ['fail', 400];

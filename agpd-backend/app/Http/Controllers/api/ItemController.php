@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\api;
 
-use Illuminate\Routing\Controller;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request as StaticRequest;
 use App\Http\Models\Item;
-use Illuminate\Support\Facades\Request;
 
 class ItemController extends Controller
 {
@@ -23,6 +24,7 @@ class ItemController extends Controller
     public function __construct()
     {
         $this->model = app()->make($this->model);
+        $this->middleware('xml');
     }
 
 
@@ -43,7 +45,7 @@ class ItemController extends Controller
 
     protected function getQueryParams()
     {
-        $queryParams = Request::all();
+        $queryParams = StaticRequest::all();
         $params = [
             'limit' => 20,
             'start' => 0,

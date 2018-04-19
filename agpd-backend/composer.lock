@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0ab164d8d7c0ecd8fda9c7c642e0a8ae",
+    "content-hash": "ecb00c8fa03ed8bfb932c32be5c5a6fd",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -2225,6 +2225,51 @@
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
             "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles",
             "time": "2017-11-27T11:13:29+00:00"
+        },
+        {
+            "name": "tucker-eric/laravel-xml-middleware",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Tucker-Eric/laravel-xml-middleware.git",
+                "reference": "7f0bf88daed55d3623edccc3c111d36e6456d87c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Tucker-Eric/laravel-xml-middleware/zipball/7f0bf88daed55d3623edccc3c111d36e6456d87c",
+                "reference": "7f0bf88daed55d3623edccc3c111d36e6456d87c",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/http": "~5.0",
+                "illuminate/support": "~5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "XmlMiddleware\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eric Tucker",
+                    "email": "tucker.ericm@gmail.com"
+                }
+            ],
+            "description": "A Laravel Middleware to accept XML requests",
+            "keywords": [
+                "laravel",
+                "middleware",
+                "request",
+                "xml",
+                "xml request",
+                "xml-middleware"
+            ],
+            "time": "2017-05-30T16:15:39+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
