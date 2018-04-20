@@ -4,7 +4,7 @@ namespace App\Http\Models;
 
 class News extends Item
 {
-    const TYPE = 'noticia';
+    const TYPE = 'Xnews';
 
     public function __construct()
     {
