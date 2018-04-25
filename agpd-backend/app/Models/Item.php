@@ -227,14 +227,16 @@ class Item
         if (is_null($page)) {
             $page = $this->page;
         }
-        if ($page > 0)
+        if ($page > 0) {
             $page -= 1;
+        }
 
 
         $result = $this->solarium->limit($this->limitPerPage, $this->start + ($this->limitPerPage * $page))->obtain();
 
         $total = $result['numFound'];
         $pages = ceil($total / $this->limitPerPage);
+        $page = $page + 1;
         $next = $page + 1;
         $prev = $page - 1;
         $pager = [

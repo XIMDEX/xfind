@@ -46,6 +46,12 @@ class ItemController extends Controller
     protected function getQueryParams()
     {
         $queryParams = StaticRequest::all();
+
+        $type = 'AND';
+        if (array_key_exists('exclude', $queryParams)) {
+            $type = ($queryParams['exclude'] === true | $queryParams['exclude'] === 'true')? 'AND' : 'OR';
+        }
+
         $params = [
             'limit' => 20,
             'start' => 0,
@@ -58,12 +64,12 @@ class ItemController extends Controller
             if (array_key_exists($param, $params)) {
                 $params[$param] = $queryParams[$param];
                 $this->setQueryParamsToModel($param, $queryParams[$param]);
-            } else if (in_array($param, $this->model->getFacets())) {
+            } elseif (in_array($param, $this->model->getFields())) {
                 $query[] = "$param:$value";
             }
         }
 
-        $query = count($query) > 0 ? implode($query, " AND ") : "*:*";
+        $query = count($query) > 0 ? implode($query, " $type ") : "*:*";
         $this->setQueryParamsToModel('query', $query);
 
         return $params;
