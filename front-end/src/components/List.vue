@@ -1,47 +1,52 @@
 <template>
     <ul class="items-list">
-        <li v-if="data.length <= 0">
+        <li v-if="docs.length <= 0">
             No hemos encontrado ningun resultado que coincida con su criterios de busquedas.
         </li>
-        <li
-            class="hits"
+        <app-list-pages
             v-else
-            v-for="(value, index) in data"
+            v-for="({author, content_flat, date, name, slug, tags, type}, index) in docs"
             :key="index"
-        >
-            <app-list-pages
-                v-if="_isPage(value)"
-                :data="value"
-            />
-            <app-list-docs v-else/>
-        </li>
+            :title="name"
+            :content="content_flat"
+            :tags="tags"
+            :slug="slug"
+        />
     </ul>
 </template>
 
 <script>
-import { has } from "ramda";
-import AppListPages from "./ListPages";
-import AppListDocs from "./ListDocument";
+import AppListPages from './ListPages';
+import AppListDocs from './ListDocument';
 
 export default {
-    name: "app-list",
+    name: 'app-list',
     props: {
-    data: {
-        type: Array,
+        page: {
+            type: Number,
+            default: 1,
+        },
+        limit: {
+            type: Number,
+            default: 1,
+        },
+        docs: {
+            type: Array,
             default: () => {
                 return [];
-            }
-        }
+            },
+        },
     },
     methods: {
-        _isPage(element) {
-            const hasType = has("type");
-            return hasType(element) && element.type === "page";
-        }
+        _isPage(type) {
+            return (
+                type === 'Xnews' || type === 'noticias' || type === 'noticia'
+            );
+        },
     },
     components: {
         AppListPages,
-        AppListDocs
-    }
+        AppListDocs,
+    },
 };
 </script>

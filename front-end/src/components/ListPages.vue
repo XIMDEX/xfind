@@ -1,71 +1,75 @@
 <template>
-    <div>
+    <li class="page">
         <section
-            class="img"
-            v-if="image"
+            class="image"
         >
             <img
                 :src="image.src"
                 :alt="image.alt"
-                :longdesc="image.longdesc"
             >
         </section>
-        <section class="content">
-            <h3>
-                {{ title }}
-            </h3>
+        <section class="body">
+            <h4>
+                <a href="#slug">{{ title }}</a>
+            </h4>
             <p>
-                {{ body }}
+                {{ content | truncate(224) }}
+                [<a href="#slug">...</a>]
             </p>
         </section>
-    </div>
+        <section
+            class="type"
+            v-if="tags.length > 0"
+        >
+            {{ tags | implode(' / ') }}
+        </section>
+    </li>
 </template>
 
 <script>
-import { has } from 'ramda';
+import { isNil } from 'ramda';
 
 export default {
-    name: "app-list-pages",
+    name: 'app-list-pages',
     props: {
-        data: {
+        img: {
             type: Object,
-            required: true
-        }
+            defualt: () => {
+                return null;
+            },
+            required: false,
+        },
+        title: {
+            type: String,
+            required: true,
+        },
+        content: {
+            type: String,
+            required: true,
+        },
+        tags: {
+            type: Array,
+            default: () => {
+                return [];
+            },
+            required: true,
+        },
+        slug: {
+            type: String,
+            required: true,
+        },
     },
     computed: {
         image() {
-            const hasImg = has('image');
-            const hasSrc = has('src');
-            const hasAlt = has('alt');
-            const hasLongdesc = has('longdesc');
-
-            const image = hasImg(this.data) ? this.data.image : false;
-
-            if (image && hasSrc(image)) {
-                return {
-                    src: image.src,
-                    alt: hasAlt(image) ? image.alt : '',
-                    longdesc: hasLongdesc(image) ? image.longdesc : ''
+            let image = this.img;
+            if (isNil(image)) {
+                image = {
+                    alt: '',
+                    src: 'undefined',
                 };
             }
-
-            return false
+            return image;
         },
-        title() {
-            const hasTitle = has('title');
-            if (hasTitle(this.data)) {
-                return this.data.title;
-            }
-
-            return false;
-        },
-        body() {
-            const hasBody = has('body');
-            if (hasBody(this.data)) {
-                return this.data.body;
-            }
-            return false;
-        }
-    }
+    },
 };
 </script>
