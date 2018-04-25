@@ -1,0 +1,48 @@
+.data {
+    width: 100%;
+    height: 60px;
+    margin-bottom: 10px;
+    font-family: $font;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    > h3 {
+        flex-grow: 1;
+        text-align: left;
+        font-size: $title-big;
+        color: $dark-blue;
+        padding-left: 20px;
+        font-weight: 400;
+    }
+
+    &.search {
+        > h3 {
+            display: flex;
+            flex-direction: row;
+            font-size: $font-size-big;
+
+            > .param {
+                margin: auto 5px;
+                padding: 0 5px;
+                display: inline-block;
+                border-radius: 2px;
+                color: $black_3;
+                background-color: $grey;
+                transition: color 0.3s ease-in-out,
+                    background-color 0.3s ease-in-out;
+                cursor: pointer;
+
+                &:hover {
+                    color: $white;
+                    background-color: $orange;
+                }
+            }
+        }
+    }
+
+    > aside {
+        flex-grow: 1;
+        text-align: right;
+    }
+}

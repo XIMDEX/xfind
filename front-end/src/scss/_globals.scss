@@ -6,7 +6,7 @@
     height: $height;
     display: block;
     box-sizing: border-box;
-    font-family: $font-futurapt;
+    font-family: $font;
     font-weight: normal;
     font-size: $font-size-default;
     letter-spacing: 0.9px;
@@ -18,14 +18,21 @@
     text-transform: uppercase;
     transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, color 0.3s ease-in-out;
 
-    &:hover {
+    &:not([xe_hover=false]):hover {
         background-color: $orange;
+    }
+
+    &:visited {
+        font-family: $font;
+        font-weight: normal;
+        font-size: $font-size-default;
+        color: white;
     }
 
     &.solid{
         background-color: $orange;
 
-        &:hover {
+        &:not([xe_hover=false]):hover {
             background-color: transparent;
             color: $orange;
         }

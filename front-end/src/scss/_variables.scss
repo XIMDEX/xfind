@@ -1,5 +1,5 @@
 $light_grey: #f3f3f3;
-$background-default-color-ligth: #FFFFFF;
+$background-default-color-ligth: #ffffff;
 
 $border-gray-ligthen-color: rgba(69, 77, 82, 0.3);
 $orange: #e27000;
@@ -15,14 +15,14 @@ $black: #1c1c1b;
 $black_2: #353535;
 $black_3: #2f3538;
 $black_4: #4b4b4b;
+$white: #ffffff;
 
-$font-futurapt: 'Source Sans Pro', sans-serif;
-$font-futurapt-obl: 'Source Sans Pro', sans-serif;
-
+$font: 'Source Sans Pro', sans-serif;
+$font-obl: 'Source Sans Pro', sans-serif;
 
 $font-size-smaller: 10px;
 $font-size-small: 14px;
-$font-size-default: 16px;
+$font-size-default: 15px;
 $font-size-big: 18px;
 $font-size-ultra: 20px;
 $title-small: 24px;
@@ -38,5 +38,7 @@ $mobile-break: 800px;
 
 //MEDIAS
 @import './mixins';
-@import './extends';
-@import './globals';
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900,900i');
+
+@import 'extends';
+@import 'globals';

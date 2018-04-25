@@ -1,0 +1,60 @@
+#breadcrumb{
+    max-width: $max_width;
+    margin: auto;
+    margin-top: 20px;
+    padding: 0 166px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    align-items: center;
+
+    > li {
+        $height: 30px;
+
+        height: $height;
+        font-family: $font;
+        font-weight: normal;
+        opacity: 0.64;
+
+        > a{
+            font-size: $font-size-default;
+            color: $orange;
+            text-decoration: none;
+
+            > i {                
+                color: $black;
+            }
+        }
+
+        >span{
+            color: $black;
+        }
+
+        >i{
+            opacity: inherit;
+            padding: 0 10px;
+        }
+
+        > *{
+            margin: auto;
+        }
+
+    }
+
+    @include respond-to(desktop){
+        max-width: $medium-break;
+        padding: 0 15px;
+    }
+
+    @include respond-to(medium){
+        max-width: unset;
+        padding: 0 15px;
+    }
+
+    @include responds-to(0, $tablet-break){
+        width: 100%;
+        max-width: 700px;
+        padding: 0 16px;
+    }
+}
