@@ -32,8 +32,9 @@ class NewsController extends ItemController
     public function create(Request $request)
     {
         $data = $request->all();
-        if (!$data) // IF not xml try with json
+        if (!$data) { // IF not xml try with json
             $data = $request->json()->all();
+        }
 
         $result = $this->model->createOrUpdate($data);
 
@@ -44,8 +45,11 @@ class NewsController extends ItemController
     public function update(Request $request)
     {
         $data = $request->all();
-        if (!$data) // IF not xml try with json
+        if (!$data) { // IF not xml try with json
             $data = $request->json()->all();
+        }
+
+        $this->prepareData($data);
 
         $result = $this->model->createOrUpdate($data);
 
@@ -58,5 +62,15 @@ class NewsController extends ItemController
         $result = $this->model->delete($id);
         $res = $result ? ['deleted', 200] : ['fail', 400];
         return response($res[0], $res[1]);
+    }
+
+    protected function prepareData(&$data)
+    {
+        $attr = $data['@attributes'];
+        $data = array_merge($data, $data['content-payload']);
+        unset($data['content-payload']);
+        $data['lang'] = $attr['language'];
+        $data['name'] = $attr['document-name'];
+        $data['slug'] = "{$data['section']}/{$data['name']}";
     }
 }

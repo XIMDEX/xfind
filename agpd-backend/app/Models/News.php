@@ -21,6 +21,7 @@ class News extends Item
             'state',
             'tags',
             'type',
+            'lang'
         ]);
 
         $this->facets = array_merge($this->facets, [
