@@ -8,7 +8,7 @@ front-end/test/unit/coverage/
 front-end/test/e2e/reports/
 front-end/selenium-debug.log
 
-back-end/vendor/
+*/vendor/
 
 # Editor directories and files
 .idea
