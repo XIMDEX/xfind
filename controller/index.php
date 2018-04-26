@@ -30,5 +30,8 @@ foreach ($langs as $lang) {
 
 function loadTemplate($body = '')
 {
-    require_once('./tpl/body.php');
+    $root = $_SERVER['DOCUMENT_ROOT'];
+    require_once($root.'/_header.html');
+    echo $body;
+    require_once($root.'/_footer.html');
 }
