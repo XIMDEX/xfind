@@ -70,7 +70,7 @@ class NewsController extends ItemController
         $data = array_merge($data, $data['content-payload']);
         unset($data['content-payload']);
         $data['lang'] = $attr['language'];
-        $data['name'] = $attr['document-name'];
+        $data['name'] = $attr['document-name'] ?? $attr['document_name'];
         $data['slug'] = "{$data['section']}/{$data['name']}";
     }
 }
