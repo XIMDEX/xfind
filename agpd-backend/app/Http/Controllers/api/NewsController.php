@@ -20,6 +20,7 @@ class NewsController extends ItemController
 
     public function show($slug)
     {
+        $slug = str_replace('@@_@@', '/', $slug);
         $data = $this->model->one("slug:{$slug}");
 
         if (!$data) {
@@ -70,7 +71,7 @@ class NewsController extends ItemController
         $data = array_merge($data, $data['content-payload']);
         unset($data['content-payload']);
         $data['lang'] = $attr['language'];
-        $data['name'] = $attr['document-name'] ?? $attr['document_name'];
+        $data['name'] = $data['name'];
         $data['slug'] = "{$data['section']}/{$data['name']}";
     }
 }
