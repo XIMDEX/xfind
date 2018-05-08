@@ -51,10 +51,14 @@ class NewsController extends ItemController
         }
 
         $this->prepareData($data);
+        ['valid' => $valid, 'errors' => $errors] = $this->model->load($data)->validate();
+        if ($valid) {
+            $result = $this->model->createOrUpdate();
+            $res = $result ? ['updated', 200] : ['fail', 400];
+        } else {
+            $res = [json_encode(['errors' => $errors]), 400];
+        }
 
-        $result = $this->model->createOrUpdate($data);
-
-        $res = $result ? ['updated', 200] : ['fail', 400];
         return response($res[0], $res[1]);
     }
 
@@ -67,11 +71,24 @@ class NewsController extends ItemController
 
     protected function prepareData(&$data)
     {
-        $attr = $data['@attributes'];
+        //$attr = $data['@attributes'];
         $data = array_merge($data, $data['content-payload']);
         unset($data['content-payload']);
-        $data['lang'] = $attr['language'];
-        $data['name'] = $data['name'];
-        $data['slug'] = "{$data['section']}/{$data['name']}";
+        $data = array_merge($data, $data['@attributes']);
+        unset($data['@attributes']);
+
+        $data['lang'] = ArrayHelpers::getProperty($data, 'language', '');
+        /*$data['name'] = ArrayHelpers::getProperty($data, 'name', '');*/
+        $data['slug'] = implode("/", array_filter([ArrayHelpers::getProperty($data, 'section', ''), ArrayHelpers::getProperty($data, 'name', '')]));
+        return $data;
+    }
+}
+
+
+class ArrayHelpers
+{
+    public static function getProperty(array $data, string $property, $default = '', $type='string')
+    {
+        return (isset($data[$property]) && ($value = $data[$property]) && gettype($value) === $type) ? $value : $default;
     }
 }

@@ -6,6 +6,20 @@ class News extends Item
 {
     const TYPE = 'Xnews';
 
+    public static $rules = [
+        'slug' => ['type' => 'string', 'required' => true],
+        'author' => ['type' => 'string', 'required' => true],
+        'content_flat' => ['type' => 'string', 'required' => true],
+        'content_render' => ['type' => 'string', 'required' => true],
+        'date' => ['type' => 'string', 'required' => true],
+        'id_section' => ['type' => 'string', 'required' => true],
+        'id_ximdex' => ['type' => 'string', 'required' => true],
+        'name' => ['type' => 'string', 'required' => true],
+        'state' => ['type' => 'string', 'required' => true, 'values' => ['publish']],
+        'lang' => ['type' => 'string', 'required' => true],
+        'tags' => ['type' => 'array', 'required' => false]
+    ];
+
     public function __construct()
     {
         $this->fields = array_merge($this->fields, [
@@ -31,6 +45,8 @@ class News extends Item
             'state',
             'tags'
         ]);
+
+        static::$rules = array_merge(static::$rules, parent::$rules);
 
         parent::__construct();
     }

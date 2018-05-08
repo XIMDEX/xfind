@@ -11,6 +11,10 @@ class Item
     protected $start = 0;
     protected $query = '*:*';
 
+    protected static $rules =[
+        'id' => ['type' => 'string', 'required' => true]
+    ];
+
     protected $fields = [
         'id',
         'creation_date',
@@ -163,18 +167,16 @@ class Item
         return $this->solarium->obtain();
     }
 
-    public function createOrUpdate($data)
+    public function createOrUpdate()
     {
         $update = $this->solarium->createUpdate();
 
         $doc = $update->createDocument();
 
-        $data = array_filter($data, function ($val) {
-            return in_array($val, self::getFields());
-        }, ARRAY_FILTER_USE_KEY);
-
-        foreach ($data as $key => $value) {
-            $doc->$key = $value;
+        foreach ($this->fields as $field) {
+            if (property_exists($this, $field)) {
+                $doc->$field = $this->$field;
+            }
         }
 
         $update->addDocument($doc);
@@ -250,5 +252,34 @@ class Item
         $result += ['pager' => $pager];
 
         return $result;
+    }
+
+    public function validate()
+    {
+        $valid = true;
+        $errors = [];
+
+        foreach (static::$rules as $property => $rule) {
+            if ($rule['required'] && (!property_exists($this, $property) || empty($this->$property))) {
+                array_push($errors, "$property is required");
+                $valid = false;
+            } elseif (property_exists($this, $property) && gettype($this->$property) !== $rule['type']) {
+                array_push($errors, "$property has invalid type");
+                $valid = false;
+            }
+        }
+
+        return compact('valid', 'errors');
+    }
+
+    public function load($data)
+    {
+        foreach ($this->fields as $field) {
+            if (isset($data[$field])) {
+                $this->$field = $data[$field];
+            }
+        }
+
+        return $this; // TODO check errors
     }
 }
