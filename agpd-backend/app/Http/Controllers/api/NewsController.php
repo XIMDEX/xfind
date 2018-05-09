@@ -77,7 +77,11 @@ class NewsController extends ItemController
         $data = array_merge($data, $data['@attributes']);
         unset($data['@attributes']);
 
+        $date = strtotime($data['date']);
+        $date = date('Y-m-d H:i:s', $date);
+
         $data['lang'] = ArrayHelpers::getProperty($data, 'language', '');
+        $data['date'] = $date;
         /*$data['name'] = ArrayHelpers::getProperty($data, 'name', '');*/
         $data['slug'] = implode("/", array_filter([ArrayHelpers::getProperty($data, 'section', ''), ArrayHelpers::getProperty($data, 'name', '')]));
         $data['content'] = $data['content_flat'];
