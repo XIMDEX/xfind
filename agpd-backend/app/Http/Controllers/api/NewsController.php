@@ -83,7 +83,15 @@ class NewsController extends ItemController
         $data['lang'] = ArrayHelpers::getProperty($data, 'language', '');
         $data['date'] = $date;
         /*$data['name'] = ArrayHelpers::getProperty($data, 'name', '');*/
-        $data['slug'] = implode("/", array_filter([ArrayHelpers::getProperty($data, 'section', ''), ArrayHelpers::getProperty($data, 'name', '')]));
+        $data['slug'] = implode(
+            "/",
+            array_filter(
+                [
+                    str_slug(ArrayHelpers::getProperty($data, 'section', ''), '-'),
+                    str_slug(ArrayHelpers::getProperty($data, 'name', ''), '-')
+                ]
+            )
+        );
         $data['content'] = $data['content_flat'];
         return $data;
     }
