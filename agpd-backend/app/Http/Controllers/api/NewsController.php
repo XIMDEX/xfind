@@ -92,6 +92,16 @@ class NewsController extends ItemController
                 ]
             )
         );
+        
+        $data['content_flat'] = preg_replace('/(<breadcrumb>.*<\/breadcrumb>)/m', '', $data['content_flat']);
+        $flat = $data['content_flat'];
+        $pos = strrpos($flat, '</breadcrumb>');
+        
+        if ($pos !== false) {
+            $flat = substr($flat, $pos + strlen('</breadcrumb>'));
+            $data['content_flat'] = $flat;
+        }
+
         $data['content'] = $data['content_flat'];
         return $data;
     }
