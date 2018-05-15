@@ -1,6 +1,9 @@
 <template>
-    <ul class="items-list">
-        <li v-if="docs.length <= 0">
+    <ul :class="{'items-list': true, 'mosaic': type === 'mosaic'}">
+        <li
+            v-if="docs.length <= 0"
+            style="line-height: 154px; text-align: center;"
+        >
             No hemos encontrado ningun resultado que coincida con su criterios de busquedas.
         </li>
         <app-list-pages
@@ -22,6 +25,10 @@ import AppListDocs from './ListDocument';
 export default {
     name: 'app-list',
     props: {
+        type: {
+            type: String,
+            default: 'list',
+        },
         page: {
             type: Number,
             default: 1,

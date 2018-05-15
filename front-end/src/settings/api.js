@@ -1,3 +1,4 @@
+import 'es6-promise/auto';
 import axios from 'axios';
 import { isNil } from 'ramda';
 import queryString from 'query-string';

@@ -17,9 +17,12 @@ Vue.filter('implode', (array, separator = ' ') => {
 });
 
 Vue.filter('truncate', (string, max = 60, start = 0, ellipsis = true) => {
-    let result = string.substring(0, max);
-    if (ellipsis) {
-        result += '...';
+    let result = string;
+    if (string.length > max) {
+        result = string.substring(0, max);
+        if (ellipsis) {
+            result += '...';
+        }
     }
     return result;
 });

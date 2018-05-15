@@ -10,11 +10,11 @@
         </section>
         <section class="body">
             <h4>
-                <a :href="slug">{{ title }}</a>
+                <a :href="slug">{{ title | truncate(63) }}</a>
             </h4>
             <p>
-                {{ content | truncate(224) }}
-                [<a :href="slug">...</a>]
+                {{ content | truncate(224, 0, false) }}
+                <a :href="slug">[...]</a>
             </p>
         </section>
         <section
