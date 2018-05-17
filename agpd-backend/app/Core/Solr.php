@@ -24,10 +24,10 @@ class Solr extends Client
         $this->conf = [
             'endpoint' => [
                 'solr' => [
-                    'host' => env('solr_host'),
-                    'port' => intval(env('solr_port')),
-                    'path' => env('solr_path'),
-                    'core' => env('solr_core')
+                    'host' => config('xfind.solr.host'),
+                    'port' => config('xfind.solr.port'),
+                    'path' => config('xfind.solr.path'),
+                    'core' => config('xfind.solr.core')
                 ]
             ]
         ];
@@ -132,7 +132,6 @@ class Solr extends Client
             $facetValues = [];
             $values = $value->getValues();
             if (is_array($values) && count($values) > 0) {
-
                 $resultFacet[$facet] = $values;
             }
         }
