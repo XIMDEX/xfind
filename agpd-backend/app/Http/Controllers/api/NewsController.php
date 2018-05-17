@@ -71,7 +71,7 @@ class NewsController extends ItemController
 
     protected function prepareData(&$data)
     {
-        //$attr = $data['@attributes'];
+
         $data = array_merge($data, $data['content-payload']);
         unset($data['content-payload']);
         $data = array_merge($data, $data['@attributes']);
@@ -82,7 +82,7 @@ class NewsController extends ItemController
 
         $data['lang'] = ArrayHelpers::getProperty($data, 'language', '');
         $data['date'] = $date;
-        /*$data['name'] = ArrayHelpers::getProperty($data, 'name', '');*/
+
         $data['slug'] = implode(
             "/",
             array_filter(
@@ -92,17 +92,17 @@ class NewsController extends ItemController
                 ]
             )
         );
-        
+
         $data['content_flat'] = preg_replace('/(<breadcrumb>.*<\/breadcrumb>)/m', '', $data['content_flat']);
         $flat = $data['content_flat'];
         $pos = strrpos($flat, '</breadcrumb>');
-        
+
         if ($pos !== false) {
             $flat = substr($flat, $pos + strlen('</breadcrumb>'));
             $data['content_flat'] = $flat;
         }
 
-        $data['content'] = $data['name'].' '.$data['content_flat'];
+        $data['content'] = $data['name'] . ' ' . $data['content_flat'];
         return $data;
     }
 }
@@ -110,7 +110,7 @@ class NewsController extends ItemController
 
 class ArrayHelpers
 {
-    public static function getProperty(array $data, string $property, $default = '', $type='string')
+    public static function getProperty(array $data, string $property, $default = '', $type = 'string')
     {
         return (isset($data[$property]) && ($value = $data[$property]) && gettype($value) === $type) ? $value : $default;
     }

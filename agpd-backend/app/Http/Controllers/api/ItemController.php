@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Item;
 use Illuminate\Support\Facades\Request as StaticRequest;
-use App\Http\Models\Item;
 
 class ItemController extends Controller
 {
@@ -49,7 +48,7 @@ class ItemController extends Controller
 
         $type = 'AND';
         if (array_key_exists('exclude', $queryParams)) {
-            $type = ($queryParams['exclude'] === true | $queryParams['exclude'] === 'true')? 'AND' : 'OR';
+            $type = ($queryParams['exclude'] === true | $queryParams['exclude'] === 'true') ? 'AND' : 'OR';
         }
 
         $params = [

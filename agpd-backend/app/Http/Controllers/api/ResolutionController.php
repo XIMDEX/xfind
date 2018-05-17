@@ -8,7 +8,6 @@ class resolutionController extends ItemController
 
     public function index()
     {
-        $params = $this->getQueryParams();
         $data = ['facets' => $this->getFacets()] +
             $this->model->find()
                 ->select([

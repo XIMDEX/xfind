@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\api;
 
 use App\Models\Nutch;
-use Illuminate\Http\Request;
 
 class NutchController extends ItemController
 {
@@ -21,13 +20,12 @@ class NutchController extends ItemController
     public function __construct()
     {
         $nutch = config('xfind.solr.nutch');
-        $variable = config(['xfind.solr.core' => $nutch]);
+        config(['xfind.solr.core' => $nutch]);
         parent::__construct();
     }
 
     public function index()
     {
-        $params = $this->getQueryParams();
         $data = $this->model->find()->paginate();
 
         return $data;

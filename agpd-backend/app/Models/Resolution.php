@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use Xfind\models\Item;
-
 class Resolution extends Item
 {
     public function __construct()
