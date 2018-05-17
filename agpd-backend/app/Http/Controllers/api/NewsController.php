@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Http\Models\News;
+use App\Models\News;
 use Illuminate\Http\Request;
 
 class NewsController extends ItemController
@@ -102,7 +102,7 @@ class NewsController extends ItemController
             $data['content_flat'] = $flat;
         }
 
-        $data['content'] = $data['content_flat'];
+        $data['content'] = $data['name'].' '.$data['content_flat'];
         return $data;
     }
 }
