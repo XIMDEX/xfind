@@ -22,3 +22,5 @@ Route::post('v1/noticias', ['as' => 'api', 'uses' => 'api\NewsController@update'
 Route::put('v1/noticias', ['as' => 'api', 'uses' => 'api\NewsController@update']);
 Route::get('v1/noticias/{slug}', ['as' => 'api', 'uses' => 'api\NewsController@show']);
 Route::delete('v1/noticias/{id}', ['as' => 'api', 'uses' => 'api\NewsController@delete']);
+
+Route::get('v1/xfind', ['as' => 'api.web.index', 'uses' => 'api\NutchController@index']);
