@@ -30,11 +30,7 @@ class ItemController extends Controller
 
     public function index()
     {
-        $params = $this->getQueryParams();
-
-        $data = ['facets' => $this->getFacets()] + $this->model
-                ->find($params['query'])->paginate();
-
+        $data = $this->model->find()->paginate();
         return $data;
     }
 

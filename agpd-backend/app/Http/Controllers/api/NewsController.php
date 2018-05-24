@@ -11,13 +11,6 @@ class NewsController extends ItemController
     /** @var News */
     protected $model = News::class;
 
-    public function index()
-    {
-        $params = $this->getQueryParams();
-        $data = $this->model->find()->paginate();
-        return $data;
-    }
-
     public function show($slug)
     {
         $slug = str_replace('@@_@@', '/', $slug);

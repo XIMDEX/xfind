@@ -13,6 +13,10 @@ class Nutch extends Item
         'content'
     ];
 
+    protected $highlight_fields = [
+        'content'
+    ];
+
     protected $facets = [
         'author',
         'date',
@@ -26,7 +30,7 @@ class Nutch extends Item
             $query = $this->query;
         }
 
-        $query = "($query) AND content:*";
+        $query = (strpos('content:', $query) != -1) ? $query : "($query) AND content:*";
 
         return parent::find($query);
     }

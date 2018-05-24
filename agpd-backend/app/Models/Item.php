@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Core\Solr;
+use Solarium\QueryType\Select\Query\Query;
 
 class Item
 {
@@ -11,7 +12,7 @@ class Item
     protected $start = 0;
     protected $query = '*:*';
 
-    protected static $rules =[
+    protected static $rules = [
         'id' => ['type' => 'string', 'required' => true]
     ];
 
@@ -20,6 +21,8 @@ class Item
         'creation_date',
         'update_date',
     ];
+
+    protected $highlight_fields = [];
 
     protected $facets = [];
 
@@ -145,6 +148,22 @@ class Item
 
         foreach ($this->facets as $facet) {
             $this->facetField($facet, $facet);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function highlight()
+    {
+        if (count($this->highlight_fields) > 0) {
+            $hl = $this->solarium->getQuery()->getHighlighting();
+            $hl->setFields($this->highlight_fields);
+            $hl->setFragSize(160);
+            $hl->setSimplePrefix('<b>');
+            $hl->setSimplePostfix('</b>');
         }
 
         return $this;

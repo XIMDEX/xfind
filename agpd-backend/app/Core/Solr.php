@@ -126,13 +126,24 @@ class Solr extends Client
         $result = $this->execute($this->query, $endpoint);
 
         $data = $result->getResponse()->getBody();
+
+        // Facets
         $facets = $result->getFacetSet() ? $result->getFacetSet()->getFacets() : [];
         $resultFacet = [];
         foreach ($facets as $facet => $value) {
-            $facetValues = [];
             $values = $value->getValues();
             if (is_array($values) && count($values) > 0) {
                 $resultFacet[$facet] = $values;
+            }
+        }
+
+        // Highlighting
+        $highlighting = $result->getHighlighting() ? $result->getHighlighting() : [];
+        $resultHighlighting = [];
+        foreach ($highlighting as $key => $value) {
+            $values = $value->getFields();
+            if (is_array($values) && count($values) > 0) {
+                $resultHighlighting[$key] = $values;
             }
         }
 
@@ -142,6 +153,7 @@ class Solr extends Client
             $response = $response['response'];
         }
         $response['facets'] = $resultFacet;
+        $response['highlighting'] = $resultHighlighting;
 
         return $response;
     }
