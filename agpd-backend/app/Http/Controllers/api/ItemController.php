@@ -24,6 +24,7 @@ class ItemController extends Controller
     {
         $this->model = app()->make($this->model);
         $this->middleware('xml');
+        $this->getQueryParams();
     }
 
 
