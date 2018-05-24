@@ -71,14 +71,17 @@ class NewsController extends ItemController
 
     protected function prepareData(&$data)
     {
-
         $data = array_merge($data, $data['content-payload']);
         unset($data['content-payload']);
-        $data = array_merge($data, $data['@attributes']);
+        $data = array_merge($data['@attributes'], $data);
         unset($data['@attributes']);
 
         $date = strtotime($data['date']);
         $date = date('Y-m-d H:i:s', $date);
+
+        if (!is_array($data['tags'])) {
+            $data['tags'] = [$data['tags']];
+        }
 
         $data['lang'] = ArrayHelpers::getProperty($data, 'language', '');
         $data['date'] = $date;
@@ -88,7 +91,7 @@ class NewsController extends ItemController
             array_filter(
                 [
                     str_slug(ArrayHelpers::getProperty($data, 'section', ''), '-'),
-                    str_slug(ArrayHelpers::getProperty($data, 'name', ''), '-')
+                    str_slug(ArrayHelpers::getProperty($data, 'filename', ''), '-')
                 ]
             )
         );

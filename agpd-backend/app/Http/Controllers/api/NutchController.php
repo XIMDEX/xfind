@@ -11,10 +11,7 @@ class NutchController extends ItemController
     protected $model = Nutch::class;
 
     protected const MAP = [
-        'url' => 'slug',
-        'content' => 'content_flat',
-        'tstamp' => 'date',
-        'title' => 'name',
+        'language' => 'lang'
     ];
 
     public function __construct()
@@ -27,6 +24,21 @@ class NutchController extends ItemController
     public function index()
     {
         $data = $this->model->find()->paginate();
+
+        foreach ($data['docs'] as $index => $docs) {
+            $update = false;
+            foreach ($docs as $key => $value) {
+                if (array_key_exists($key, static::MAP)) {
+                    $docs[static::MAP[$key]] = $value;
+                    unset($docs[$key]);
+                    $update = true;
+                }
+            }
+
+            if ($update) {
+                $data['docs'][$index] = $docs;
+            }
+        }
 
         return $data;
     }
