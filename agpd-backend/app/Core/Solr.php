@@ -176,6 +176,14 @@ class Solr extends Client
         return $this;
     }
 
+    public function sort(array $sort)
+    {
+        foreach ($sort as $key => $value) {
+            $this->query->addSort($key, $value);
+        }
+        return $this;
+    }
+
     public function fields(array $fields)
     {
         $this->query->setFields($fields);

@@ -11,6 +11,7 @@ class Item
     protected $page = 0;
     protected $start = 0;
     protected $query = '*:*';
+    protected $sort = [];
 
     protected static $rules = [
         'id' => ['type' => 'string', 'required' => true]
@@ -130,6 +131,26 @@ class Item
         return $this->start;
     }
 
+    /**
+     * Set the value of sort
+     *
+     * @return  self
+     */
+    public function setSort(array $sort)
+    {
+        $this->sort = $sort;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of sort
+     */
+    public function getSort() : array
+    {
+        return $this->sort;
+    }
+
     public function facets(array $facets = null)
     {
         if (is_null($facets)) {
@@ -137,14 +158,19 @@ class Item
         }
     }
 
-    public function find($query = null)
+    public function find($query = null, array $sort = [])
     {
         if (is_null($query)) {
             $query = $this->query;
         }
+        
+        if (count($sort) === 0) {
+            $sort = $this->getSort();
+        }
 
         $this->solarium
-            ->selectQuery($query);
+            ->selectQuery($query)
+            ->sort($sort);
 
         foreach ($this->facets as $facet) {
             $this->facetField($facet, $facet);

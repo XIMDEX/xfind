@@ -52,14 +52,16 @@ class News extends Item
         parent::__construct();
     }
 
-    public function find($query = null)
+    public function find($query = null, array $sort = [])
     {
         if (is_null($query)) {
             $query = $this->query;
         }
 
+        $sort = array_merge($sort, ['date' => 'desc']);
+
         $query = "($query) AND type:" . static::TYPE;
 
-        return parent::find($query);
+        return parent::find($query, $sort);
     }
 }
