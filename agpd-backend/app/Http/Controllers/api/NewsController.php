@@ -72,7 +72,7 @@ class NewsController extends ItemController
         $date = strtotime($data['date']);
         $date = date('Y-m-d H:i:s', $date);
 
-        if (!is_array($data['tags'])) {
+        if (isset($data['tags']) && !is_array($data['tags'])) {
             $data['tags'] = [$data['tags']];
         }
 
