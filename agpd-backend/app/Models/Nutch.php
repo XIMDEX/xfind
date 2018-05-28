@@ -24,7 +24,7 @@ class Nutch extends Item
         'tags'
     ];
 
-    public function find($query = null)
+    public function find($query = null, array $sort = [])
     {
         if (is_null($query)) {
             $query = $this->query;
@@ -32,6 +32,6 @@ class Nutch extends Item
 
         $query = (strpos('content:', $query) != -1) ? $query : "($query) AND content:*";
 
-        return parent::find($query);
+        return parent::find($query, []);
     }
 }
