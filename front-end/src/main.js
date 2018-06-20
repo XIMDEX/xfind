@@ -3,6 +3,7 @@
 import Vue from 'vue';
 import VueAxios from 'vue-axios';
 import axios from 'axios';
+import { isNil } from 'ramda';
 
 import api from './settings/api';
 import App from './App';
@@ -17,9 +18,9 @@ Vue.filter('implode', (array, separator = ' ') => {
 });
 
 Vue.filter('truncate', (string, max = 60, start = 0, ellipsis = true) => {
-    let result = string;
-    if (string.length > max) {
-        result = string.substring(0, max);
+    let result = isNil(string) ? '' : string;
+    if (result.length > max) {
+        result = result.substring(0, max);
         if (ellipsis) {
             result += '...';
         }

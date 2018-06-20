@@ -1,9 +1,11 @@
 <template>
     <div>
         <search
+            v-if="!title"
             @submit="submitSearch"
         />
         <search-params
+            :title="title"
             :last-search="lastSearch"
             :total="total"
             @updateParams="updateParams"
@@ -12,20 +14,28 @@
 </template>
 
 <script>
+import { isNil } from 'ramda';
 import Search from './Search';
 import SearchParams from './SearchParams';
+
+const title = !isNil(window.$search.static) ? window.$search.static : '';
 
 export default {
     name: 'finder',
     props: {
         total: {
             type: Number,
-            default: 0,
+            default: 0
         },
+        last: {
+            type: String,
+            default: ''
+        }
     },
     data() {
         return {
-            lastSearch: '',
+            lastSearch: this.last,
+            title: title ? title : ''
         };
     },
     methods: {
@@ -36,13 +46,13 @@ export default {
         updateParams(value) {
             this.submitSearch({
                 current: '',
-                last: value,
+                last: value
             });
-        },
+        }
     },
     components: {
         Search,
-        SearchParams,
-    },
+        SearchParams
+    }
 };
 </script>

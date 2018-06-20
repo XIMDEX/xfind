@@ -13,11 +13,12 @@
         </div>
         <div class="top">
             <finder
+                :last="last"
                 :total="docFounds"
                 @submit="submitSearch"
             />
         </div>
-        <div class="content">
+        <div class="content search">
             <view-types
                 :type="listType"
                 @change="changeListType"
@@ -34,12 +35,14 @@
                 <span slot="prevContent"><i class="fas fa-angle-left"/></span>
                 <span slot="nextContent"><i class="fas fa-angle-right"/></span>
             </paginate>
-            <app-list
-                :docs="docs"
-                :page="page+1"
-                :type="listType"
-                @pager="getPager"
-            />
+            <div id="list-body">
+                <app-list
+                    :docs="docs"
+                    :page="page+1"
+                    :type="listType"
+                    @pager="getPager"
+                />
+            </div>
             <paginate
                 v-if="page_count > 1"
                 :force-page="page"
@@ -66,11 +69,17 @@ import Finder from './components/Finder';
 import ViewTypes from './components/ViewTypes';
 
 const baseUrl = window.$search.src;
+const section = !isNil(window.$search.section) ? window.$search.section : null;
+const type =
+    !isNil(window.$search.type) && window.$search.type === 'Xfind'
+        ? 'xfind'
+        : 'noticias';
 
 export default {
     name: 'app',
     data() {
         return {
+            last: '',
             loading: true,
             docFounds: 0,
             limit: 10,
@@ -78,12 +87,12 @@ export default {
                 next: 1,
                 page: 1,
                 pages: 1,
-                prev: 1,
+                prev: 1
             },
             facets: [],
             docs: [],
             query: null,
-            listType: 'list',
+            listType: 'list'
         };
     },
     computed: {
@@ -94,7 +103,7 @@ export default {
         page_count() {
             const { pages } = this.pager;
             return pages;
-        },
+        }
     },
     methods: {
         getPager(value) {
@@ -105,26 +114,30 @@ export default {
         },
         changePage(page) {
             this.pager.page = page;
-            this.submitSearch();
+            this.submitSearch(this.last);
         },
         submitSearch(data = '') {
+            this.last = data;
             this.query = {
-                exclude: false,
-                content: `*${data}*`,
+                exclude: true,
+                content: `*${data}*`
             };
 
             if (isNil(data) || isEmpty(data)) {
                 this.query = null;
             }
 
-            const type = 'noticias';
             this._search(`${baseUrl}/${type}`);
         },
         _search(uri, filter) {
             const query = {
                 page: this.page + 1,
-                limit: this.limit,
+                limit: this.limit
             };
+
+            if (!isNil(section)) {
+                query.section = section;
+            }
 
             this.loading = true;
 
@@ -146,14 +159,23 @@ export default {
                         next: 1,
                         page: 1,
                         pages: 1,
-                        prev: 1,
+                        prev: 1
                     };
                     this.loading = false;
                 });
-        },
+        }
     },
     mounted() {
-        const type = 'noticias';
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var param = url.searchParams.get('search');
+        if (!isNil(param) && param != '') {
+            this.last = param;
+            this.query = {
+                exclude: true,
+                content: `*${param}*`
+            };
+        }
         this._search(`${baseUrl}/${type}`);
     },
     components: {
@@ -161,8 +183,8 @@ export default {
         Paginate,
         Finder,
         ViewTypes,
-        Stretch,
-    },
+        Stretch
+    }
 };
 </script>
 

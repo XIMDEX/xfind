@@ -27,7 +27,7 @@ export default {
     data() {
         return {
             lastSearch: '',
-            search: '',
+            search: ''
         };
     },
     methods: {
@@ -35,10 +35,10 @@ export default {
             this.lastSearch = this.search;
             this.$emit('submit', {
                 current: this.search,
-                last: this.lastSearch,
+                last: this.lastSearch
             });
             this.search = '';
-        },
-    },
+        }
+    }
 };
 </script>

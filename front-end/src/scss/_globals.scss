@@ -1,4 +1,20 @@
-.button{
+html {
+    height: 100%;
+
+    > body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+        align-items: stretch;
+
+        > main {
+            flex-grow: 99;
+            background-color: $light_grey;
+        }
+    }
+}
+
+.button {
     $width: 300px;
     $height: 48px;
 
@@ -16,9 +32,10 @@
     border: solid 2px $orange;
     text-decoration: none;
     text-transform: uppercase;
-    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out,
+        color 0.3s ease-in-out;
 
-    &:not([xe_hover=false]):hover {
+    &:not([xe_hover='false']):hover {
         background-color: $orange;
     }
 
@@ -29,10 +46,10 @@
         color: white;
     }
 
-    &.solid{
+    &.solid {
         background-color: $orange;
 
-        &:not([xe_hover=false]):hover {
+        &:not([xe_hover='false']):hover {
             background-color: transparent;
             color: $orange;
         }
