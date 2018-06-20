@@ -9,10 +9,10 @@ class News extends Item
     public static $rules = [
         'slug' => ['type' => 'string', 'required' => true],
         'author' => ['type' => 'string', 'required' => true],
-        'content_flat' => ['type' => 'string', 'required' => true],
-        'content_render' => ['type' => 'string', 'required' => true],
+        'content_flat' => ['type' => 'string', 'required' => false],
+        'content_render' => ['type' => 'string', 'required' => false],
         'date' => ['type' => 'string', 'required' => true],
-        'id_section' => ['type' => 'string', 'required' => true],
+        'id_section' => ['type' => 'string', 'required' => false],
         'id_ximdex' => ['type' => 'string', 'required' => true],
         'name' => ['type' => 'string', 'required' => true],
         'state' => ['type' => 'string', 'required' => true, 'values' => ['publish']],

@@ -66,8 +66,10 @@ class NewsController extends ItemController
     {
         $data = array_merge($data, $data['content-payload']);
         unset($data['content-payload']);
-        $data = array_merge($data['@attributes'], $data);
-        unset($data['@attributes']);
+        if (isset($data['@attributes'])) {
+            $data = array_merge($data['@attributes'], $data);
+            unset($data['@attributes']);
+        }
 
         $date = strtotime($data['date']);
         $date = date('Y-m-d H:i:s', $date);
@@ -79,26 +81,36 @@ class NewsController extends ItemController
         $data['lang'] = ArrayHelpers::getProperty($data, 'language', '');
         $data['date'] = $date;
 
-        $data['slug'] = implode(
-            "/",
-            array_filter(
-                [
-                    str_slug(ArrayHelpers::getProperty($data, 'section', ''), '-'),
-                    str_slug(ArrayHelpers::getProperty($data, 'filename', ''), '-')
-                ]
-            )
-        );
+        $data['type'] = 'Xnews';
 
-        $data['content_flat'] = preg_replace('/(<breadcrumb>.*<\/breadcrumb>)/m', '', $data['content_flat']);
-        $flat = $data['content_flat'];
-        $pos = strrpos($flat, '</breadcrumb>');
-
-        if ($pos !== false) {
-            $flat = substr($flat, $pos + strlen('</breadcrumb>'));
-            $data['content_flat'] = $flat;
+        if (!isset($data['slug'])) {
+            $data['slug'] = implode(
+                "/",
+                array_filter(
+                    [
+                        str_slug(ArrayHelpers::getProperty($data, 'section', ''), '-'),
+                        str_slug(ArrayHelpers::getProperty($data, 'filename', ''), '-')
+                    ]
+                )
+            );
         }
 
-        $data['content'] = $data['name'] . ' ' . $data['content_flat'];
+        if (isset($data['content_flat']) && !is_array($data['content_flat'])) {
+            $data['content_flat'] = preg_replace('/(<breadcrumb>.*<\/breadcrumb>)/m', '', $data['content_flat']);
+            $flat = $data['content_flat'];
+            $pos = strrpos($flat, '</breadcrumb>');
+
+
+            if ($pos !== false) {
+                $flat = substr($flat, $pos + strlen('</breadcrumb>'));
+                $data['content_flat'] = $flat;
+            }
+
+            $data['content'] = $data['name'] . ' ' . $data['content_flat'];
+        } else {
+            $data['content'] = '';
+            $data['content_flat'] = '';
+        }
         return $data;
     }
 }
