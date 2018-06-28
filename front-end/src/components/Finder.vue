@@ -2,7 +2,12 @@
     <div>
         <search
             v-if="!title"
+            :filters="filters"
             @submit="submitSearch"
+        />
+        <filters
+            v-if="true"
+            :data="filters"
         />
         <search-params
             :title="title"
@@ -17,8 +22,12 @@
 import { isNil } from 'ramda';
 import Search from './Search';
 import SearchParams from './SearchParams';
+import Filters from './Filters';
 
-const title = !isNil(window.$search.static) ? window.$search.static : '';
+const title =
+    !isNil(window.$search.static) && window.$search.static
+        ? window.$search.static
+        : '';
 
 export default {
     name: 'finder',
@@ -27,16 +36,27 @@ export default {
             type: Number,
             default: 0
         },
-        last: {
-            type: String,
-            default: ''
+        search: {
+            type: Array,
+            default: () => []
+        },
+        filters: {
+            type: Object,
+            default: () => {
+                return {};
+            }
         }
     },
     data() {
         return {
-            lastSearch: this.last,
-            title: title ? title : ''
+            lastSearch: '',
+            title: title
         };
+    },
+    computed: {
+        hasSearch() {
+            return this.title === '';
+        }
     },
     methods: {
         submitSearch({ current, last }) {
@@ -52,7 +72,13 @@ export default {
     },
     components: {
         Search,
-        SearchParams
+        SearchParams,
+        Filters
+    },
+    mounted() {
+        const urlWindow = new URL(window.location.href);
+        this.lastSearch =
+            title === '' ? urlWindow.searchParams.get('search') : '';
     }
 };
 </script>

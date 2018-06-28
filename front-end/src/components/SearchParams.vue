@@ -1,30 +1,29 @@
 <template>
     <div class="data search">
-        <template
-            v-if="title === ''"
+        <h3
+            v-if="lastSearch !== '' || hasTitle"
+            :class="{params: hasParams && !hasTitle}"
         >
-            <h3 
-                v-if="lastSearch !== ''"
+            <template
+                v-if="lastSearch"
             >
                 Resultados encontrados para:
                 <span
-                    v-if="params !== ''"
+                    v-if="hasParams"
                     class="param"
                     :title="params"
                     @click="removeParam"
                 >
+                    <i class="fas fa-times" />
                     {{ params | truncate(10) }}
-                    <i class="fas fa-times"></i>
                 </span>
-            </h3>
-        </template>
-        <template
-            v-else
-        >
-            <h3>
+            </template>
+            <template
+                v-else
+            >
                 {{ title }}
-            </h3>
-        </template>
+            </template>
+        </h3>
         <aside>
             <b>{{ total }}</b> Resultados
         </aside>
@@ -32,6 +31,8 @@
 </template>
 
 <script>
+import { isEmpty } from 'ramda';
+
 export default {
     name: 'search-params',
     props: {
@@ -45,6 +46,7 @@ export default {
         },
         title: {
             type: String,
+            require: false,
             default: ''
         }
     },
@@ -55,7 +57,10 @@ export default {
     },
     computed: {
         hasParams() {
-            return false;
+            return !isEmpty(this.params);
+        },
+        hasTitle() {
+            return !isEmpty(this.title);
         }
     },
     methods: {

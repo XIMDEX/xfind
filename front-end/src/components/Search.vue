@@ -24,6 +24,7 @@
 <script>
 export default {
     name: 'search',
+    props: {},
     data() {
         return {
             lastSearch: '',
@@ -39,6 +40,7 @@ export default {
             });
             this.search = '';
         }
-    }
+    },
+    components: {}
 };
 </script>
