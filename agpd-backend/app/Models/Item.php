@@ -14,7 +14,9 @@ class Item
     protected $sort = [];
 
     protected static $rules = [
-        'id' => ['type' => 'string', 'required' => true]
+        'id' => ['type' => 'string', 'required' => true],
+        'creation_date' => ['type' => 'string', 'required' => false],
+        'update_date' => ['type' => 'string', 'required' => false],
     ];
 
     protected $fields = [
