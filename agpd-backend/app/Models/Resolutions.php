@@ -15,18 +15,19 @@ class Resolutions extends Item
 
         'state' => ['type' => 'string', 'required' => true, 'values' => ['publish']],
         'content_flat' => ['type' => 'string', 'required' => false],
-        
+
         'title' => ['type' => 'string', 'required' => false],
         'pages' => ['type' => 'string', 'required' => false],
 
         'date' => ['type' => 'string', 'required' => true],
-        'gravity_law' => ['type' => 'string', 'required' => true],
+        'gravity_law' => ['type' => 'string', 'required' => false],
         'resolution_number' => ['type' => 'string', 'required' => true],
         'code_procedure' => ['type' => 'string', 'required' => true],
         'type_procedure' => ['type' => 'string', 'required' => true],
-        'activity_group' => ['type' => 'string', 'required' => true],
-        'theme' => ['type' => 'string', 'required' => true],
-        'inflicted_item' => ['type' => 'string', 'required' => true],
+        'activity_group' => ['type' => 'string', 'required' => false],
+        'province_denounced' => ['type' => 'string', 'required' => false],
+        'theme' => ['type' => 'string', 'required' => false],
+        'inflicted_item' => ['type' => 'string', 'required' => false],
         'recurred' => ['type' => 'string', 'required' => true],
         'author' => ['type' => 'string', 'required' => true],
         'type' => ['type' => 'string', 'required' => true]
