@@ -2,28 +2,30 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Models\Resolutions;
+use App\Core\Utils\DateHelpers;
+
 class resolutionController extends ItemController
 {
-    protected $className = '\Xfind\models\Resolution';
+    /** @var News */
+    protected $model = Resolutions::class;
 
-    public function index()
+    public function __construct()
     {
-        $data = ['facets' => $this->getFacets()] +
-            $this->model->find()
-                ->select([
-                    'filenamesh_s',
-                    'articuloinfringido_s',
-                    'grupoactividad_s',
-                    'provinciadenunciado_s'
-                ])
-                ->facet('2012', 'fechafirma_rdt:"2012"')
-                ->paginate();
+        $resolutions = config('xfind.solr.resolutions');
+        config(['xfind.solr.core' => $resolutions]);
+        parent::__construct();
+    }
 
-        $result = $this->response->withHeader(
-            'Content-Type',
-            'application/json'
-        )->write($this->setResponse($data, true));
+    protected function prepareData(&$data)
+    {
+        $data = array_merge($data, $data['content-payload'], $data['metadata']);
+        unset($data['content-payload']);
+        unset($data['metadata']);
 
-        return $result;
+        $data['date'] = DateHelpers::parse($data['date']);
+
+        parent::prepareData($data);
+        return $data;
     }
 }
