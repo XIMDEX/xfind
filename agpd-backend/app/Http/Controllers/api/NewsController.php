@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Models\News;
 use Illuminate\Http\Request;
+use App\Core\Utils\ArrayHelpers;
 
 class NewsController extends ItemController
 {
@@ -112,14 +113,5 @@ class NewsController extends ItemController
             $data['content_flat'] = '';
         }
         return $data;
-    }
-}
-
-
-class ArrayHelpers
-{
-    public static function getProperty(array $data, string $property, $default = '', $type = 'string')
-    {
-        return (isset($data[$property]) && ($value = $data[$property]) && gettype($value) === $type) ? $value : $default;
     }
 }

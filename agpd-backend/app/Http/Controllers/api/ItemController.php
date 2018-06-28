@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\api;
 
-use App\Http\Controllers\Controller;
 use App\Models\Item;
+use Illuminate\Http\Request;
+use App\Core\Utils\DateHelpers;
+use App\Core\Utils\ArrayHelpers;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Request as StaticRequest;
 
 class ItemController extends Controller
@@ -32,6 +35,25 @@ class ItemController extends Controller
     {
         $data = $this->model->find()->paginate();
         return $data;
+    }
+
+    public function update(Request $request)
+    {
+        $data = $request->all();
+        if (!$data) { // IF not xml try with json
+            $data = $request->json()->all();
+        }
+
+        $this->prepareData($data);
+        ['valid' => $valid, 'errors' => $errors] = $this->model->load($data)->validate();
+        if ($valid) {
+            $result = $this->model->createOrUpdate();
+            $res = $result ? ['updated', 200] : ['fail', 400];
+        } else {
+            $res = [json_encode(['errors' => $errors]), 400];
+        }
+
+        return response($res[0], $res[1]);
     }
 
     protected function getFacets()
@@ -69,6 +91,27 @@ class ItemController extends Controller
         $this->setQueryParamsToModel('query', $query);
 
         return $params;
+    }
+
+    protected function prepareData(&$data)
+    {
+        if (isset($data['@attributes'])) {
+            $data = array_merge($data['@attributes'], $data);
+            unset($data['@attributes']);
+        }
+
+        $creationDate = ArrayHelpers::getProperty($data, 'creation_date', '');
+        $updateDate = ArrayHelpers::getProperty($data, 'update_date', '');
+
+        $data['creation_date'] = DateHelpers::parse($creationDate);
+        $data['creation_date'] = DateHelpers::parse($updateDate);
+
+        $data1 = [];
+        foreach ($data as $key => $value) {
+            $data1[strtolower($key)] = $value;
+        }
+        $data = $data1;
+        return $data;
     }
 
     private function setQueryParamsToModel($param, $value)
