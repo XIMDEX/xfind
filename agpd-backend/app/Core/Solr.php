@@ -194,7 +194,9 @@ class Solr extends Client
     {
         $this->query->getFacetSet()
             ->createFacetField($facet)
-            ->setField($field);
+            ->setField($field)
+            ->setSort('index')
+            ->setLimit(-1);;
         return $this;
     }
 }
