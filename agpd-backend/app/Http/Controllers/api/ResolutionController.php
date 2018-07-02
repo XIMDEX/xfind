@@ -25,6 +25,8 @@ class resolutionController extends ItemController
 
         $data['date'] = DateHelpers::parse($data['date']);
 
+        $data['content'] = implode(' ', [$data['name'], $data['title'] ?? '', $data['resolution_number'] ?? '', $data['content_flat'] ?? '']);
+
         parent::prepareData($data);
         return $data;
     }
