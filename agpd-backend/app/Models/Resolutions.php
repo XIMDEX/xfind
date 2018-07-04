@@ -34,6 +34,10 @@ class Resolutions extends Item
         'type' => ['type' => 'string', 'required' => false]
     ];
 
+    protected $highlight_fields = [
+        'content'
+    ];
+
     public function __construct()
     {
         $this->fields = array_merge($this->fields, [
@@ -61,8 +65,6 @@ class Resolutions extends Item
         $this->facets = array_merge($this->facets, [
             'date',
             'gravity_law',
-            'resolution_number',
-            'code_procedure',
             'type_procedure',
             'activity_group',
             'inflicted_item',

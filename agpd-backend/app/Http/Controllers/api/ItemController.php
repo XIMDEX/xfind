@@ -33,7 +33,10 @@ class ItemController extends Controller
 
     public function index()
     {
-        $data = $this->model->find()->paginate();
+        $data = $this->model
+            ->find()
+            ->highlight()
+            ->paginate();
         return $data;
     }
 
