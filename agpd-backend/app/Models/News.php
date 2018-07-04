@@ -15,6 +15,7 @@ class News extends Item
         'id_section' => ['type' => 'string', 'required' => false],
         'id_ximdex' => ['type' => 'string', 'required' => true],
         'name' => ['type' => 'string', 'required' => true],
+        'image' => ['type' => 'string', 'required' => false],
         'state' => ['type' => 'string', 'required' => true, 'values' => ['publish']],
         'lang' => ['type' => 'string', 'required' => true],
         'tags' => ['type' => 'array', 'required' => false]
@@ -31,6 +32,7 @@ class News extends Item
             'id_section',
             'id_ximdex',
             'name',
+            'image',
             'section',
             'state',
             'tags',
