@@ -52,8 +52,8 @@
                 display: flex;
                 align-items: center;
                 padding-right: 10px;
-                max-width: 420px;
-                min-width: 420px;
+                max-width: 70%;
+                min-width: 70%;
 
                 @import 'vue-multiselect/dist/vue-multiselect.min.css';
 
@@ -66,6 +66,9 @@
                     display: flex;
                     .option__title {
                         margin: auto auto auto 0;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
                     }
 
                     .option__count {
@@ -90,9 +93,34 @@
             }
         }
 
+        @include respond-to(tablet) {
+            max-width: 50%;
+            min-width: 50%;
+
+            > div {
+                &.select {
+                    align-items: center;
+                    padding-right: 10px;
+                    max-width: 60%;
+                    min-width: 60%;
+                }
+            }
+        }
+
         @include respond-to(mobile) {
             max-width: 100%;
             min-width: 100%;
+
+            > div {
+                border-right: 0px;
+
+                &.select {
+                    align-items: center;
+                    padding-right: 10px;
+                    max-width: 60%;
+                    min-width: 60%;
+                }
+            }
         }
     }
 }
