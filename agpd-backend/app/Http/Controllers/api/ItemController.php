@@ -79,6 +79,7 @@ class ItemController extends Controller
             'page' => 1
         ];
 
+        $sort = [];
         $query = [];
 
         foreach ($queryParams as $param => $value) {
@@ -87,11 +88,14 @@ class ItemController extends Controller
                 $this->setQueryParamsToModel($param, $queryParams[$param]);
             } elseif (in_array($param, $this->model->getFields())) {
                 $query[] = "$param:$value";
+            } elseif (substr( $param, 0, 5) === 'sort_') {
+                $sort[str_replace('sort_', '', $param)] = $value;
             }
         }
 
         $query = count($query) > 0 ? implode($query, " $type ") : "*:*";
         $this->setQueryParamsToModel('query', $query);
+        $this->model->setSort($sort);
 
         return $params;
     }
