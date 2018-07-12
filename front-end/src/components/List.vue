@@ -10,20 +10,23 @@
             </li>
             <app-list-pages
                 v-else
-                v-for="({author, content_flat, date, name, slug, tags, type, id}, index) in docs"
+                v-for="({author, content_flat, date, name, slug, tags, type, id, image}, index) in docs"
                 :key="index"
                 :title="name"
-                :content="content_flat"
+                :content="_getContent(content_flat)"
                 :tags="tags"
                 :slug="slug"
                 :highlights="highlights"
                 :id="id"
+                :img="image"
             />
         </ul>
     </div>
 </template>
 
 <script>
+import { isNil } from 'ramda';
+
 import AppListPages from './ListPages';
 import AppListDocs from './ListDocument';
 
@@ -60,6 +63,9 @@ export default {
             return (
                 type === 'Xnews' || type === 'noticias' || type === 'noticia'
             );
+        },
+        _getContent(content) {
+            return isNil(content) ? '' : content;
         }
     },
     components: {

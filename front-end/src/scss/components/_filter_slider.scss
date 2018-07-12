@@ -1,0 +1,19 @@
+div.range-slider {
+    display: flex;
+    align-items: center;
+
+    > .display {
+        color: $dark-blue;
+        max-width: 100px;
+        box-sizing: border-box;
+        padding: 5px 10px;
+    }
+
+    .vue-slider-component {
+        flex-grow: 2;
+    }
+
+    .vue-slider-process {
+        background-color: $orange-light;
+    }
+}

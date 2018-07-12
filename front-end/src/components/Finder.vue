@@ -2,24 +2,31 @@
     <div>
         <search
             v-if="!title"
-            :filters="filters"
+            :filters="params"
             @submit="submitSearch"
+            @advanced="toogleAdvanced"
         />
         <filters
             v-if="true"
             :data="filters"
+            :filters="params"
+            :open="advanced"
+            @filters="setFilters"
         />
         <search-params
             :title="title"
             :last-search="lastSearch"
+            :filters="searchParams"
             :total="total"
             @updateParams="updateParams"
+            @updateFilters="updateFilters"
         />
     </div>
 </template>
 
 <script>
-import { isNil } from 'ramda';
+import { isNil, merge } from 'ramda';
+
 import Search from './Search';
 import SearchParams from './SearchParams';
 import Filters from './Filters';
@@ -50,7 +57,10 @@ export default {
     data() {
         return {
             lastSearch: '',
-            title: title
+            title: title,
+            advanced: false,
+            params: {},
+            searchParams: {}
         };
     },
     computed: {
@@ -59,15 +69,41 @@ export default {
         }
     },
     methods: {
-        submitSearch({ current, last }) {
+        submitSearch({ current, last, filters }) {
+            this.params = filters;
+            this.searchParams = filters;
             this.lastSearch = last;
-            this.$emit('submit', current);
+            this.$emit('submit', { current, filters });
         },
         updateParams(value) {
             this.submitSearch({
                 current: '',
-                last: value
+                last: value,
+                filters: this.searchParams
             });
+        },
+        updateFilters({ filters, last }) {
+            filters = isNil(filters) ? {} : filters;
+            this.searchParams = filters;
+            this.submitSearch({
+                current: '',
+                last,
+                filters
+            });
+        },
+        toogleAdvanced() {
+            this.advanced = !this.advanced;
+        },
+        setFilters(evt) {
+            let params = this.params;
+            params = merge(params, evt);
+            for (const key in params) {
+                const value = params[key];
+                if (isNil(value)) {
+                    delete params[key];
+                }
+            }
+            this.params = params;
         }
     },
     components: {

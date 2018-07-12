@@ -1,14 +1,9 @@
 <template>
     <li class="page">
-        <section
-            v-show="true"
-            class="image"
-        >
-            <img
-                :src="image.src"
-                :alt="image.alt"
-            >
-        </section>
+        <fill-image
+            :src="img"
+            :link="slug"
+        />
         <section class="body">
             <h4>
                 <a :href="slug">{{ title | truncate(63) }}</a>
@@ -38,7 +33,9 @@
 </template>
 
 <script>
-import { isNil, isEmpty } from 'ramda';
+import { isEmpty } from 'ramda';
+
+import FillImage from './Image';
 
 export default {
     name: 'app-list-pages',
@@ -48,10 +45,8 @@ export default {
             required: true
         },
         img: {
-            type: Object,
-            defualt: () => {
-                return null;
-            },
+            type: String,
+            defualt: 'undefined',
             required: false
         },
         title: {
@@ -83,17 +78,10 @@ export default {
     computed: {
         hasHighlights() {
             return !isEmpty(this.highlights);
-        },
-        image() {
-            let image = this.img;
-            if (isNil(image)) {
-                image = {
-                    alt: '',
-                    src: 'undefined'
-                };
-            }
-            return image;
         }
+    },
+    components: {
+        FillImage
     }
 };
 </script>

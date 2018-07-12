@@ -1,34 +1,75 @@
 <template>
-    <aside class="filters">
+    <aside
+        :class="{filters: true, open: open}"
+    >
         <div
-            class="facet"
+            :class="{facet: true, slider: (index === 'date')}"
             v-for="(options, index) in data"
             :key="index"
         >
             <label>
-                {{ index }}
+                {{ `resolutions.${index}` | trans }}
             </label>
-            <v-select
+            <div
+                class="select"
                 v-if="index !== 'date'"
-                v-model="filters[index]"
-                :options="prepareOptions(options)"
-                :settings="{width:'100%'}"
-            />
-            <v-slider
+            >
+                <v-select
+                    v-model="selected[index]"
+                    @input="addFilter($event, index)"
+                    track-by="text"
+                    :options="prepareOptions(options)"
+                    select-label=""
+                    deselect-label=""
+                    :searchable="false"
+                    :hide-selected="true"
+                >
+                    <template
+                        slot="singleLabel"
+                        slot-scope="props"
+                    >
+                        <span
+                            class="option__title"
+                        >
+                            {{ props.option.text | truncate(45) }}
+                        </span>
+                        <span
+                            class="option__count"
+                        >
+                            {{ props.option.value }}
+                        </span>
+                    </template>
+                    <template
+                        slot="option"
+                        slot-scope="props"
+                    >
+                        <span
+                            class="option__title"
+                        >
+                            {{ props.option.text | truncate(45) }}
+                        </span>
+                        <span
+                            class="option__count"
+                        >
+                            {{ props.option.value }}
+                        </span>
+                    </template>
+                </v-select>
+            </div>
+            <filter-slider
                 v-else
-                :value="startRange(options)"
-                :data="prepareRanges(options)"
-                :interval="3"
-                :tooltipDir="['bottom','top']"
+                :options="options"
+                @change="addFilter($event, index)"
             />
         </div>
     </aside>
 </template>
 
 <script>
-import VSelect from 'v-select2-component';
-import dateFormat from 'dateformat';
-import vSlider from 'vue-slider-component';
+import VSelect from 'vue-multiselect';
+import { hasIn, isNil } from 'ramda';
+
+import FilterSlider from './FilterSlider';
 
 export default {
     name: 'facets',
@@ -36,58 +77,67 @@ export default {
         data: {
             type: Object,
             required: true
+        },
+        filters: {
+            type: Object,
+            required: true
+        },
+        open: {
+            type: Boolean,
+            default: false
         }
     },
     data() {
         return {
-            filters: {}
+            selected: {}
         };
     },
     methods: {
+        customLabel(option) {
+            let text = option.text;
+            let value = option.value;
+            const textLength = text.length;
+
+            if (textLength > 25 - length) {
+                text = text.substring(0, 20) + '...';
+            }
+
+            return `${text} - ${value}`;
+        },
         prepareOptions(options) {
             let result = [];
             for (const index in options) {
-                const id = index;
                 let text = index;
-                try {
-                    text = dateFormat(index, 'dd/mm/yyyy');
-                } catch (e) {}
+                let value = options[index];
+
                 result.push({
-                    id,
-                    text
+                    text,
+                    value
                 });
             }
-
             return result;
         },
-        prepareRanges(options) {
-            let result = [];
-            for (const index in options) {
-                let text = index;
-                try {
-                    text = dateFormat(index, 'dd/mm/yyyy');
-                } catch (e) {}
-                result.push(text);
+        addFilter(evt, index) {
+            let filter = {};
+
+            filter[index] = evt;
+            if (!isNil(evt) && hasIn('text', evt)) {
+                filter[index] = evt.text;
             }
 
-            return result;
-        },
-        startRange(options) {
-            let result = [];
-            const keys = Object.keys(options);
-            let first = keys[0];
-            let last = keys[keys.length - 1];
-            try {
-                first = dateFormat(first, 'dd/mm/yyyy');
-                last = dateFormat(last, 'dd/mm/yyyy');
-            } catch (e) {}
-
-            return [first, last];
+            this.$emit('filters', filter);
         }
     },
     components: {
         VSelect,
-        vSlider
+        FilterSlider
+    },
+    beforeUpdate() {
+        for (const key in this.selected) {
+            if (!hasIn(key, this.filters)) {
+                delete this.selected[key];
+            }
+        }
     }
 };
 </script>

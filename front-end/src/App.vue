@@ -21,10 +21,15 @@
             />
         </div>
         <div class="content search">
-            <view-types
-                :type="listType"
-                @change="changeListType"
-            />
+            <aside>
+                <order
+                    @changed="changeOrder"
+                />
+                <view-types
+                    :type="listType"
+                    @change="changeListType"
+                />
+            </aside>
             <paginate
                 v-if="page_count > 1"
                 :force-page="page"
@@ -69,6 +74,7 @@ import AppList from './components/List';
 import Finder from './components/Finder';
 import ViewTypes from './components/ViewTypes';
 import Facets from './components/Facets';
+import Order from './components/Order';
 
 const baseUrl = hasIn('src', window.$search) ? window.$search.src : null;
 const type = hasIn('type', window.$search) ? window.$search.type : null;
@@ -83,7 +89,8 @@ const staticSearch =
 
 const types = {
     Xnews: 'noticias',
-    Xfind: 'xfind'
+    Xfind: 'xfind',
+    Resolutions: 'resolutions'
 };
 
 export default {
@@ -105,7 +112,8 @@ export default {
             docs: [],
             query: null,
             listType: 'list',
-            selectedFacet: null
+            selectedFacet: null,
+            order: 'desc'
         };
     },
     computed: {
@@ -134,14 +142,53 @@ export default {
         },
         changePage(page) {
             this.pager.page = page;
-            this.submitSearch(this.last);
+            let data = {
+                current: this.last,
+                filters: this.filters
+            };
+
+            this.submitSearch(data, false);
         },
-        submitSearch(data = '') {
-            this.last = data;
+        changeOrder(order) {
+            this.order = order;
+            let data = {
+                current: this.last,
+                filters: this.filters
+            };
+
+            this.submitSearch(data, false);
+        },
+        submitSearch(data = '', resetPages = true) {
+            let last = data;
             this.query = {
                 exclude: true,
                 content: `*${data}*`
             };
+
+            if (resetPages) {
+                this.pager.page = 0;
+            }
+
+            if (is(Object, data)) {
+                last = data.current;
+                this.query.content = `*${data.current}*`;
+                this.filters = data.filters;
+
+                if (isNil(data.current) || isEmpty(data.current)) {
+                    delete this.query.content;
+                }
+                delete data.current;
+
+                for (const key in data.filters) {
+                    let value = data.filters[key];
+                    if (key === 'date') {
+                        value = `[${value[0]} TO ${value[1]}]`;
+                    } else {
+                        value = `"${value}"`;
+                    }
+                    this.query[key] = value;
+                }
+            }
 
             if (isNil(data) || isEmpty(data)) {
                 this.query = {};
@@ -152,13 +199,15 @@ export default {
             }
 
             if (!isNil(baseUrl) && !isEmpty(baseUrl)) {
+                this.last = last;
                 this._search(`${baseUrl}/${types[type]}`);
             }
         },
         _search(uri, filter) {
             const query = {
                 page: this.page + 1,
-                limit: this.limit
+                limit: this.limit,
+                sort_date: this.order
             };
 
             if (!isNil(section)) {
@@ -210,7 +259,8 @@ export default {
         Finder,
         ViewTypes,
         Stretch,
-        Facets
+        Facets,
+        Order
     }
 };
 </script>

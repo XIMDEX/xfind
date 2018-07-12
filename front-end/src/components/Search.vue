@@ -18,17 +18,34 @@
         >
             Buscar
         </button>
+        <button
+            @click="advanced"
+        >
+            Avanzado
+        </button>
+        <button
+            @click="clean"
+        >
+            Limpiar
+        </button>
     </div>
 </template>
 
 <script>
 export default {
     name: 'search',
-    props: {},
+    props: {
+        filters: {
+            type: Object,
+            default: () => {
+                return {};
+            }
+        }
+    },
     data() {
         return {
             lastSearch: '',
-            search: ''
+            search: this.current
         };
     },
     methods: {
@@ -36,9 +53,20 @@ export default {
             this.lastSearch = this.search;
             this.$emit('submit', {
                 current: this.search,
-                last: this.lastSearch
+                last: this.lastSearch,
+                filters: this.filters
             });
-            this.search = '';
+        },
+        advanced() {
+            this.$emit('advanced', true);
+        },
+        clean() {
+            this.lastSearch = this.search = '';
+            this.$emit('submit', {
+                current: this.search,
+                last: this.lastSearch,
+                filters: {}
+            });
         }
     },
     components: {}

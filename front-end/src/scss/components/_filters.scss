@@ -1,44 +1,98 @@
 .filters {
-    padding: 20px 0 0 0;
+    border-top: 1px solid transparent;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
     display: flex;
     flex-direction: row;
     align-items: center;
     flex-wrap: wrap;
     font-family: $font;
 
+    &.open {
+        border-top-color: $grey;
+        height: auto;
+        overflow: visible;
+        padding: 20px 0 0 0;
+    }
+
     > .facet {
-        max-width: 250px;
-        min-width: 250px;
+        max-width: 50%;
+        min-width: 50%;
         display: flex;
         align-items: center;
+        color: $dark-blue;
+
+        &.slider {
+            > div {
+                padding-right: 0;
+            }
+        }
 
         > label {
+            color: $dark-blue;
             font-size: $font-size-medium-small;
             font-weight: bold;
-            color: $warm-grey;
             text-transform: uppercase;
+            padding-left: 10px;
         }
+
+        @import '_filter_slider';
 
         > div {
             flex-grow: 2;
-            margin: 0 16px 0 8px;
+            align-items: center;
+            margin: 5px 16px 5px 8px;
+            height: 48px;
+            margin-left: auto;
+            margin-right: 0;
+            border-right: 1px solid $grey;
 
-            .select2-container--default .select2-selection--single {
-                background-color: $white;
-                border: 1px solid $grey;
-                border-radius: 0px;
-            }
+            &.select {
+                display: flex;
+                align-items: center;
+                padding-right: 10px;
+                max-width: 420px;
+                min-width: 420px;
 
-            .select2-results__option {
-                padding: 6px;
-                font-family: $font !important;
-            }
+                @import 'vue-multiselect/dist/vue-multiselect.min.css';
 
-            .select2-container--default
-                .select2-results__option--highlighted[aria-selected] {
-                background-color: $orange;
-                color: $white;
+                .multiselect__tags {
+                    border-radius: 0;
+                }
+
+                .multiselect__single,
+                .multiselect__option {
+                    display: flex;
+                    .option__title {
+                        margin: auto auto auto 0;
+                    }
+
+                    .option__count {
+                        margin: 0;
+                        font-weight: bold;
+                    }
+                }
+
+                .multiselect__option--highlight:not(.multiselect__option--selected) {
+                    background-color: $orange;
+
+                    &:after {
+                        background-color: $orange;
+                    }
+                }
             }
+        }
+
+        &:nth-child(even) {
+            > div {
+                border-right: 0px;
+            }
+        }
+
+        @include respond-to(mobile) {
+            max-width: 100%;
+            min-width: 100%;
         }
     }
 }
