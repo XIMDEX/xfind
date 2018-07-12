@@ -82,7 +82,7 @@ class Resolutions extends Item
             $query = $this->query;
         }
 
-        $sort = array_merge($sort, ['date' => 'desc']);
+        $sort = array_merge($sort, ['date' => 'desc'], $this->sort);
 
         $query = "($query) AND type:" . static::TYPE;
 

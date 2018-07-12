@@ -20,7 +20,6 @@ class Nutch extends Item
     protected $facets = [
         'author',
         'date',
-        //'type',
         'tags'
     ];
 
@@ -30,8 +29,10 @@ class Nutch extends Item
             $query = $this->query;
         }
 
+        $sort = array_merge($sort, ['date' => 'desc'], $this->sort);
+
         $query = (strpos('content:', $query) != -1) ? $query : "($query) AND content:*";
 
-        return parent::find($query, []);
+        return parent::find($query, $sort);
     }
 }

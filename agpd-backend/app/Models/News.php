@@ -21,6 +21,10 @@ class News extends Item
         'tags' => ['type' => 'array', 'required' => false]
     ];
 
+    protected $highlight_fields = [
+        'content'
+    ];
+
     public function __construct()
     {
         $this->fields = array_merge($this->fields, [
@@ -44,8 +48,6 @@ class News extends Item
         $this->facets = array_merge($this->facets, [
             'author',
             'date',
-            'section',
-            'state',
             'tags'
         ]);
 
@@ -60,7 +62,7 @@ class News extends Item
             $query = $this->query;
         }
 
-        $sort = array_merge($sort, ['date' => 'desc']);
+        $sort = array_merge($sort, ['date' => 'desc'], $this->sort);
 
         $query = "($query) AND type:" . static::TYPE;
 
