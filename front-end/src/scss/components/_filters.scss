@@ -64,6 +64,12 @@
                     border-radius: 0;
                 }
 
+                .multiselect__single {
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
                 .multiselect__single,
                 .multiselect__option {
                     display: flex;
@@ -122,6 +128,53 @@
                     padding-right: 10px;
                     max-width: 60%;
                     min-width: 60%;
+                }
+            }
+        }
+    }
+
+    &.min {
+        > .facet {
+            min-width: 200px;
+            max-width: 200px;
+
+            > label {
+                box-sizing: border-box;
+                max-width: 50%;
+                min-width: 50%;
+                padding-right: 10px;
+            }
+
+            &.slider {
+                flex-grow: 2;
+                min-width: unset;
+                max-width: unset;
+
+                > label {
+                    max-width: unset;
+                    min-width: unset;
+                }
+            }
+
+            > div {
+                margin: unset;
+                height: 48px;
+
+                &.select {
+                    box-sizing: border-box;
+                    max-width: 50%;
+                    min-width: 50%;
+
+                    .multiselect__content-wrapper {
+                        border-top: 1px solid $grey;
+                        width: 400px;
+                    }
+                }
+            }
+
+            &:nth-child(even) {
+                > div {
+                    border-right: 0px;
                 }
             }
         }

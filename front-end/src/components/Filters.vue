@@ -1,6 +1,6 @@
 <template>
     <aside
-        :class="{filters: true, open: open}"
+        :class="{filters: true, open: open, min: hasMin}"
     >
         <div
             :class="{facet: true, slider: (index === 'date')}"
@@ -71,6 +71,13 @@ import { hasIn, isNil } from 'ramda';
 
 import FilterSlider from './FilterSlider';
 
+const STYLE =
+    hasIn('$search', window) &&
+    hasIn('style', window.$search) &&
+    !isNil(window.$search.style)
+        ? window.$search.style
+        : 'default';
+
 export default {
     name: 'facets',
     props: {
@@ -91,6 +98,11 @@ export default {
         return {
             selected: {}
         };
+    },
+    computed: {
+        hasMin() {
+            return STYLE === 'min';
+        }
     },
     methods: {
         customLabel(option) {
