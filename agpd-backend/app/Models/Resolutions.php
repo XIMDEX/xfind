@@ -63,12 +63,11 @@ class Resolutions extends Item
         ]);
 
         $this->facets = array_merge($this->facets, [
-            'date',
             'gravity_law',
+            'inflicted_item',
             'type_procedure',
             'activity_group',
-            'inflicted_item',
-            'recurred'
+            'date'
         ]);
 
         static::$rules = array_merge(static::$rules, parent::$rules);
