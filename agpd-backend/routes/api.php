@@ -26,4 +26,7 @@ Route::delete('v1/noticias/{id}', ['as.noticias.delete' => 'api', 'uses' => 'api
 Route::get('v1/resolutions', ['as' => 'api.resolutions', 'uses' => 'api\resolutionController@index']);
 Route::post('v1/resolutions', ['as' => 'api.resolutions.create', 'uses' => 'api\resolutionController@update']);
 
+Route::get('v1/legal_reports', ['as' => 'api.legal_reports', 'uses' => 'api\LegalReportsController@index']);
+Route::post('v1/legal_reports', ['as' => 'api.legal_reports.create', 'uses' => 'api\LegalReportsController@update']);
+
 Route::get('v1/xfind', ['as' => 'api.web.index', 'uses' => 'api\NutchController@index']);

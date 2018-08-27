@@ -7,6 +7,7 @@ return [
         'path' => env('SOLR_PATH', '/solr/'),
         'core' => env('SOLR_CORE', 'demo'),
         'nutch' => env('SOLR_NUTCH', 'nutch'),
-        'resolutions' => env('SOLR_RESOLUTIONS', 'resolutions')
+        'resolutions' => env('SOLR_RESOLUTIONS', 'resolutions'),
+        'legalreports' => env('SOLR_LEGALREPORTS', 'legal_reports'),
     ]
 ];
