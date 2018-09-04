@@ -4,7 +4,6 @@ namespace App\Models;
 
 class LegalReport extends Item
 {
-
     public static $rules = [
         'name' => ['type' => 'string', 'required' => true],
         'slug' => ['type' => 'string', 'required' => true],
@@ -23,6 +22,9 @@ class LegalReport extends Item
         'code' => ['type' => 'string', 'required' => false],
         'theme' => ['type' => 'string', 'required' => false],
         'subtheme' => ['type' => 'string', 'required' => false],
+        'administration' => ['type' => 'string', 'required' => false],
+        'normative_range' => ['type' => 'string', 'required' => false],
+        'norm_type' => ['type' => 'string', 'required' => false],
         'language' => ['type' => 'string', 'required' => false],
         'author' => ['type' => 'string', 'required' => false],
         'type' => ['type' => 'string', 'required' => false]
@@ -40,7 +42,9 @@ class LegalReport extends Item
         $this->facets = array_merge($this->facets, [
             'theme',
             'subtheme',
-            'date'
+            'date',
+            'administration',
+            'normative_range'
         ]);
 
         static::$rules = array_merge(static::$rules, parent::$rules);
