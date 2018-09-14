@@ -15,7 +15,7 @@
                 :title="name"
                 :content="_getContent(content_flat)"
                 :tags="tags"
-                :slug="slug"
+                :slug="_toString(slug)"
                 :highlights="highlights"
                 :id="id"
                 :img="image"
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { isNil } from 'ramda';
+import { isNil, type as RType } from 'ramda';
 
 import AppListPages from './ListPages';
 import AppListDocs from './ListDocument';
@@ -66,6 +66,17 @@ export default {
         },
         _getContent(content) {
             return isNil(content) ? '' : content;
+        },
+        _toString(data) {
+            let _data = data;
+            if (RType(data) === 'Array') {
+                _data = data.join('');
+            }
+            return _data;
+        },
+        _debug(data, title = '') {
+            console.log(title, data);
+            return data;
         }
     },
     components: {

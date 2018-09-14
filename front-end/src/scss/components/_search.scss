@@ -51,6 +51,16 @@
             background-color: $orange;
             color: white;
         }
+
+        &.simple {
+            color: $orange-light;
+            background-color: transparent;
+
+            &:hover {
+                color: $orange;
+                background-color: transparent;
+            }
+        }
     }
 
     @include respond-to(mobile) {

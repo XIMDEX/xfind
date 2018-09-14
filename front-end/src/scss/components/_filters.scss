@@ -38,6 +38,7 @@
             font-weight: bold;
             text-transform: uppercase;
             padding-left: 10px;
+            word-wrap: break-word;
         }
 
         @import '_filter_slider';
@@ -169,12 +170,6 @@
                         border-top: 1px solid $grey;
                         width: 400px;
                     }
-                }
-            }
-
-            &:nth-child(even) {
-                > div {
-                    border-right: 0px;
                 }
             }
         }

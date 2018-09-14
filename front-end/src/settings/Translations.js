@@ -11,6 +11,11 @@ module.exports = {
         state: 'Estado',
         order: 'Ordenar',
         new_results: 'Resultado más reciente',
-        old_results: 'Resultado menos reciente'
+        old_results: 'Resultado menos reciente',
+        theme: 'Tema',
+        subtheme: 'Sub tema',
+        administration: 'Administración',
+        normative_range: 'Rango normativo',
+        year: 'Fecha (año)'
     }
 };

@@ -5,20 +5,22 @@
         <aside
             class="display"
         >
-            {{ value[0] | date }}
+            {{ value[0] }}
         </aside>
         <v-slider
             v-model="value"
-            :data="prepareRanges(options)"
+            :data="options"
             :interval="3"
-            :tooltip="false"
+            :tooltip="'always'"
+            :tooltip-dir="tooltipDir"
             :real-time="false"
+            :tooltip-style="tooltipStyle"
             @drag-end="change"
         />
         <aside
             class="display"
         >
-            {{ value[1] | date }}
+            {{ value[1] }}
         </aside>
     </div>
 </template>
@@ -32,27 +34,32 @@ export default {
     name: 'filter-slider',
     props: {
         options: {
-            type: Object,
+            type: Array,
             required: true
         }
     },
     data() {
         return {
-            value: this.startRange(this.options)
+            value: this.startRange(this.options),
+            tooltipDir: [
+                "bottom",
+                "bottom"
+            ],
+            tooltipStyle: [
+                {
+                    "backgroundColor": "#EC852C",
+                    "borderColor": "#EC852C"
+                },
+                {
+                    "backgroundColor": "#EC852C",
+                    "borderColor": "#EC852C"
+                }
+            ]
         };
     },
     methods: {
-        prepareRanges(options) {
-            let result = [];
-            for (const index in options) {
-                let text = index;
-                result.push(text);
-            }
-
-            return result;
-        },
         startRange(options) {
-            const keys = Object.keys(options);
+            const keys = options;
             let first = keys[0];
             let last = keys[keys.length - 1];
 

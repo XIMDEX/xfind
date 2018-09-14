@@ -66,32 +66,19 @@
 </template>
 
 <script>
-import { isNil, merge, isEmpty, hasIn, is } from 'ramda';
+import { isNil, hasIn, merge, isEmpty, is } from 'ramda';
 import { Stretch } from 'vue-loading-spinner';
-
 import Paginate from 'vuejs-paginate';
+
 import AppList from './components/List';
 import Finder from './components/Finder';
 import ViewTypes from './components/ViewTypes';
 import Facets from './components/Facets';
 import Order from './components/Order';
+import { $typesMap as types, dateComps } from './Core/Mappers/types';
+import { parseDate, formatDate } from './Core/Date';
 
-const baseUrl = hasIn('src', window.$search) ? window.$search.src : null;
-const type = hasIn('type', window.$search) ? window.$search.type : null;
-const section = hasIn('section', window.$search)
-    ? window.$search.section
-    : null;
-
-const staticSearch =
-    !isNil(window.$search.static) && window.$search.static
-        ? window.$search.static
-        : false;
-
-const types = {
-    Xnews: 'noticias',
-    Xfind: 'xfind',
-    Resolutions: 'resolutions'
-};
+const baseFilters = {};
 
 export default {
     name: 'app',
@@ -118,7 +105,7 @@ export default {
     },
     computed: {
         hasSearch() {
-            return type !== 'Xnews';
+            return this.$search.get('type') !== 'Xnews';
         },
         page() {
             const { page } = this.pager;
@@ -134,6 +121,9 @@ export default {
         }
     },
     methods: {
+        isDate($val) {
+            return hasIn($val, dateComps);
+        },
         getPager(value) {
             this.pager = value;
         },
@@ -159,6 +149,10 @@ export default {
             this.submitSearch(data, false);
         },
         submitSearch(data = '', resetPages = true) {
+            const _type = types[this.$search.get('type')];
+            const route = this.$search.route(_type);
+            const section = this.$search.get('section');
+
             let last = data;
             this.query = {
                 exclude: true,
@@ -172,7 +166,8 @@ export default {
             if (is(Object, data)) {
                 last = data.current;
                 this.query.content = `*${data.current}*`;
-                this.filters = data.filters;
+                let filters = data.filters;
+                this.filters = filters;
 
                 if (isNil(data.current) || isEmpty(data.current)) {
                     delete this.query.content;
@@ -181,7 +176,10 @@ export default {
 
                 for (const key in data.filters) {
                     let value = data.filters[key];
-                    if (key === 'date') {
+                    if (this.isDate(key)) {
+                        value = parseDate(value)
+                        console.log('parse', value);
+                        value = formatDate(value, 'isoUtcDateTime');
                         value = `[${value[0]} TO ${value[1]}]`;
                     } else {
                         value = `"${value}"`;
@@ -198,24 +196,28 @@ export default {
                 this.query['section'] = section;
             }
 
-            if (!isNil(baseUrl) && !isEmpty(baseUrl)) {
+            if (!isNil(route) && !isEmpty(route)) {
                 this.last = last;
-                this._search(`${baseUrl}/${types[type]}`);
+                this._search(route);
             }
         },
         _search(uri, filter) {
-            const query = {
+            const section = this.$search.get('section');
+            let _filters = Object.assign(baseFilters, this.$search.get('filters'))
+
+            const baseQuery = {
                 page: this.page + 1,
                 limit: this.limit,
                 sort_date: this.order
             };
 
             if (!isNil(section)) {
-                query.section = section;
+                baseQuery.section = section;
             }
 
-            this.loading = true;
+            const query = Object.assign(baseQuery, _filters)
 
+            this.loading = true;
             this.$xfind
                 .get(uri, merge(query, this.query))
                 .then(({ docs, pager, facets, numFound, highlighting }) => {
@@ -247,7 +249,7 @@ export default {
     mounted() {
         this.last = '';
         const urlWindow = new URL(window.location.href);
-        const content = !staticSearch
+        const content = !this.$search.get('staticSearch')
             ? urlWindow.searchParams.get('search')
             : '';
 

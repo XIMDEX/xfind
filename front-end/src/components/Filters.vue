@@ -3,7 +3,7 @@
         :class="{filters: true, open: open, min: hasMin}"
     >
         <div
-            :class="{facet: true, slider: (index === 'date')}"
+            :class="{facet: true, slider: isDate(index)}"
             v-for="(options, index) in data"
             :key="index"
         >
@@ -12,7 +12,7 @@
             </label>
             <div
                 class="select"
-                v-if="index !== 'date'"
+                v-if="!isDate(index)"
             >
                 <v-select
                     v-model="selected[index]"
@@ -58,7 +58,7 @@
             </div>
             <filter-slider
                 v-else
-                :options="options"
+                :options="prepareOptions(options, index, false)"
                 @change="addFilter($event, index)"
             />
         </div>
@@ -67,16 +67,13 @@
 
 <script>
 import VSelect from 'vue-multiselect';
-import { hasIn, isNil } from 'ramda';
+import { hasIn, isNil, is } from 'ramda';
 
 import FilterSlider from './FilterSlider';
+import { dateComps } from '../Core/Mappers/types';
+import { formatDate } from '../Core/Date';
 
-const STYLE =
-    hasIn('$search', window) &&
-    hasIn('style', window.$search) &&
-    !isNil(window.$search.style)
-        ? window.$search.style
-        : 'default';
+const STYLE = 'min';
 
 export default {
     name: 'facets',
@@ -102,9 +99,33 @@ export default {
     computed: {
         hasMin() {
             return STYLE === 'min';
-        }
+        },
     },
     methods: {
+        format($value, type, format) {
+            let method = null;
+            if (format !== '' && type !== '') {
+                type = type.charAt(0).toUpperCase() + type.slice(1);
+                method = `format${type}`;
+            }
+
+            if (is(Function, this[method])) {
+                $value = this[method]($value, format);
+            }
+            return $value;
+        },
+        formatDate($value, $format) {
+            return formatDate($value, $format);
+        },
+        isDate($val) {
+            return hasIn($val, dateComps);
+        },
+        _format($val) {
+            if (this.isDate($val)) {
+                return dateComps[$val];
+            }
+            return '';
+        },
         customLabel(option) {
             let text = option.text;
             let value = option.value;
@@ -116,22 +137,25 @@ export default {
 
             return `${text} - ${value}`;
         },
-        prepareOptions(options) {
+        prepareOptions(options, type = '', isObj = true) {
             let result = [];
             for (const index in options) {
-                let text = index;
+                let text = this.format(index, this.isDate(type) ? 'date' : '', this._format(type));
                 let value = options[index];
 
-                result.push({
-                    text,
-                    value
-                });
+                if (isObj) {
+                    result.push({
+                        text,
+                        value
+                    });
+                    continue;
+                }
+                result.push(text);
             }
             return result;
         },
         addFilter(evt, index) {
             let filter = {};
-
             filter[index] = evt;
             if (!isNil(evt) && hasIn('text', evt)) {
                 filter[index] = evt.text;

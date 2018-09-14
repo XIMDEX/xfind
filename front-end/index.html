@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="http://xfindn/css/header.css">
-    <link rel="stylesheet" href="http://xfindn/css/footer.css">
+    <link rel="stylesheet" href="http://www.aepd.es/css/header.css">
+    <link rel="stylesheet" href="http://www.aepd.es/css/footer.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg"
         crossorigin="anonymous">
 
@@ -17,25 +17,30 @@
 </head>
 
 <body>
-    <header class="desktop">
+    <header class="desktop" xe_section="header">
         <div class="top">
-            <a class="logo" href="index.html" title="web AGPD">
-                <img src="./static/assets/agpd-logo.svg" alt="logo AGPD" longdesc="Agencia española de protección de datos">
+            <a class="logo" href="https://www.aepd.es/index.html" title="web AEPD">
+                <img src="https://www.aepd.es/images/agpd-logo-fondo-blanco-letra-black2.svg" alt="logo AEPD" longdesc="Agencia española de protección de datos">
             </a>
             <aside>
-                <div class="search">
-                    <input type="text" name="search" title="Buscar" placeholder="Buscar">
-                </div>
-                <button type="submit">Sede Electrónica</button>
+                <form method="GET" action="https://www.aepd.es/search.php">
+                    <div class="search">
+                        <input type="text" name="search" title="Buscar" placeholder="Buscar">
+                        <i class="icon fas fa-search"></i>
+                    </div>
+                    <a href="https://sedeagpd.gob.es/sede-electronica-web/" tytle="Sede Electrónica">Sede Electrónica</a>
+                </form>
             </aside>
             <aside>
                 <div class="dropdown">
                     <p>Castellano
                         <i class="fas fa-angle-down"></i>
                     </p>
-                    <ul class='dropdown-options'>
+                    <ul class="dropdown-options">
                         <li>
-                            <a href="#en" title="Ingles">Ingles</a>
+                            <a href="https://www.aepd.es/_header.html" title="English">English</a>
+                            <a href="https://www.aepd.es/_header.html" title="Español">Español</a>
+                            <a href="https://www.aepd.es/_header.html" title="Euskal">Euskal</a>
                         </li>
                     </ul>
                 </div>
@@ -44,39 +49,125 @@
         <nav class="bottom">
             <ul>
                 <li class="selected">
-                    <a href="./static/ficha.html">Inicio</a>
+                    <a href="https://www.aepd.es/index.html">Inicio</a>
                 </li>
                 <li>
-                    <a href="./static/ficha.html">La Agencia</a>
+                    <a href="#">La Agencia</a>
+                    <ul class="inner-menu">
+                        <li>
+                            <a href="https://www.aepd.es/agencia/index.html">Bienvenida<wbr></a>
+                        </li>
+                        <li>
+                            <a href="https://www.aepd.es/agencia/en-que-podemos-ayudarte.html">En&nbsp;qué&nbsp;podemos&nbsp;ayudarte<wbr></a>
+                        </li>
+                        <li>
+                            <a href="https://www.aepd.es/agenda/index.php">Agenda<wbr></a>
+                        </li>
+                        <li>
+                            <a href="https://www.aepd.es/agencia/transparencia/index.html">Transparencia<wbr></a>
+                        </li>
+                        <li>
+                            <a href="https://www.aepd.es/agencia/redes-sociales.html">Redes&nbsp;sociales<wbr></a>
+                        </li>
+                        <li>
+                            <a href="https://www.aepd.es/agencia/contacto.html">Contacto<wbr></a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
-                    <a href="./static/ficha.html">Nuevo reglamento</a>
+                    <a href="#">Reglamento</a>
+                    <ul class="inner-menu">
+                        <li>
+                            <a href="https://www.aepd.es/reglamento/derechos/index.html">Conoce&nbsp;tus&nbsp;derechos<wbr></a>
+                        </li>
+                        <li>
+                            <a href="https://www.aepd.es/reglamento/cumplimiento/index.html">Cumple&nbsp;tus&nbsp;deberes<wbr></a>
+                        </li>
+                        <li>
+                            <a href="https://edpb.europa.eu/" target="_blank" title="" rel="noopener">Comité&nbsp;Europeo&nbsp;de&nbsp;Protección&nbsp;de&nbsp;Datos<wbr></a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
-                    <a href="./static/ficha.html">Áreas de actuación</a>
+                    <a href="#">Áreas de actuación</a>
+                    <ul class="inner-menu">
+                        <li>
+                            <a href="https://www.aepd.es/areas/internet/index.html">Internet&nbsp;y&nbsp;redes&nbsp;sociales<wbr></a>
+                        </li>
+                        <li>
+                            <a href="https://www.aepd.es/areas/telecomunicaciones/index.html">Reclamaciones&nbsp;de&nbsp;telecomunicaciones<wbr></a>
+                        </li>
+                        <li>
+                            <a href="https://www.aepd.es/areas/publicidad/index.html">Publicidad&nbsp;no&nbsp;deseada<wbr></a>
+                        </li>
+                        <li>
+                            <a href="http://www.tudecideseninternet.es/agpd1/" target="_blank" title="" rel="noopener">Educación&nbsp;y&nbsp;menores<wbr></a>
+                        </li>
+                        <li>
+                            <a href="https://www.aepd.es/areas/videovigilancia/index.html">Videovigilancia<wbr></a>
+                        </li>
+                        <li>
+                            <a href="https://www.aepd.es/areas/ue/index.html">Proyectos&nbsp;europeos<wbr></a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
-                    <a href="./static/ficha.html">Informes y resoluciones</a>
+                    <a href="#">Informes y resoluciones</a>
+                    <ul class="inner-menu">
+                        <li>
+                            <a href="https://www.aepd.es/normativa/index.html">Normativa<wbr></a>
+                        </li>
+                        <li>
+                            <a href="https://www.aepd.es/informes/index.html">Informes<wbr></a>
+                        </li>
+                        <li>
+                            <a href="https://www.aepd.es/resoluciones/index.html">Resoluciones<wbr></a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
-                    <a href="./static/ficha.html">Guías y herramientas</a>
+                    <a href="#">Guías y herramientas</a>
+                    <ul class="inner-menu" style="">
+                        <li>
+                            <a href="https://www.aepd.es/guias/index.html">Guías<wbr></a>
+                        </li>
+                        <li>
+                            <a href="https://www.aepd.es/herramientas/index.html">Herramientas<wbr></a>
+                        </li>
+                        <li>
+                            <a href="https://www.aepd.es/infografias/index.html">Infografias<wbr></a>
+                        </li>
+                        <li>
+                            <a href="https://www.aepd.es/videos/index.html">Videos<wbr></a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
-                    <a href="./static/ficha.html">Internacional</a>
-                </li>
-                <li>
-                    <a href="./static/ficha.html">Prensa y comunicación</a>
+                    <a href="#">Prensa y comunicación</a>
+                    <ul class="inner-menu">
+                        <li>
+                            <a href="https://www.aepd.es/comunicacion/prensa/index.php">Notas&nbsp;de&nbsp;prensa<wbr></a>
+                        </li>
+                        <li>
+                            <a href="https://www.aepd.es/blog/index.html">Blog<wbr></a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </nav>
     </header>
-    <header class="mobile">
+    <header class="mobile" xe_section="header">
         <div class="top">
-            <a class="logo" href="index.html" title="web AGPD">
-                <img src="./static/assets/agpd-logo.svg" alt="Agencia española de protección de datos">
+            <a class="logo" href="https://www.aepd.es/index.html" title="web AEPD">
+                <img src="https://www.aepd.es/images/agpd-logo-fondo-blanco-letra-black2.svg" alt="Agencia española de protección de datos">
             </a>
+            <form method="GET" action="https://www.aepd.es/search.php" id="mobile-search">
+                <div class="search">
+                    <input type="text" name="search" title="Buscar" placeholder="Buscar">
+                </div>
+            </form>
             <aside>
-                <button>
+                <button id="open-search">
                     <i class="fas fa-search"></i>
                     <span>BUSCAR</span>
                 </button>
@@ -91,66 +182,126 @@
         <nav class="bottom">
             <aside class="actions">
                 <div class="dropdown">
-                    <!-- TODO langs -->
+                    <!--                                                                                                                               TODO langs                                                                                                                               -->
                 </div>
-                <button type="submit">Sede Electrónica</button>
+                <a href="https://sedeagpd.gob.es/sede-electronica-web/" tytle="Sede Electrónica">Sede Electrónica</a>
             </aside>
             <ul>
                 <li class="selected">
-                    <a href="./static/ficha.html">Inicio</a>
+                    <a href="https://www.aepd.es/index.html">Inicio</a>
                 </li>
                 <li>
-                    <a href="./static/ficha.html" class="dropdown">La Agencia
-                        <i class="fas fa-angle-down"></i>
-                    </a>
+                    <a href="#" class="dropdown">La Agencia</a>
                     <ul class="dropdown-list">
                         <li>
-                            <a href="./static/ficha.html">Bienvenida a la Agencia</a>
+                            <a href="https://www.aepd.es/agencia/index.html">Bienvenida</a>
                         </li>
                         <li>
-                            <a href="./static/ficha.html">Funciones</a>
+                            <a href="https://www.aepd.es/agencia/en-que-podemos-ayudarte.html">En qué podemos ayudarte</a>
                         </li>
                         <li>
-                            <a href="./static/ficha.html">Historia</a>
+                            <a href="https://www.aepd.es/agenda/index.php">Agenda</a>
                         </li>
                         <li>
-                            <a href="./static/ficha.html">Comparecencias</a>
+                            <a href="https://www.aepd.es/agencia/transparencia/index.html">Transparencia</a>
                         </li>
                         <li>
-                            <a href="./static/ficha.html">Agenda</a>
+                            <a href="https://www.aepd.es/agencia/redes-sociales.html">Redes sociales</a>
                         </li>
                         <li>
-                            <a href="./static/ficha.html">El blog de la Agenda</a>
+                            <a href="https://www.aepd.es/agencia/contacto.html">Contacto</a>
                         </li>
                     </ul>
                 </li>
                 <li>
-                    <a href="./static/ficha.html">Nuevo reglamento</a>
+                    <a href="#" class="dropdown">Reglamento</a>
+                    <ul class="dropdown-list">
+                        <li>
+                            <a href="https://www.aepd.es/reglamento/derechos/index.html">Conoce tus derechos</a>
+                        </li>
+                        <li>
+                            <a href="https://www.aepd.es/reglamento/cumplimiento/index.html">Cumple tus deberes</a>
+                        </li>
+                        <li>
+                            <a href="https://edpb.europa.eu/" target="_blank" title="" rel="noopener">Comité Europeo de Protección de Datos</a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
-                    <a href="./static/ficha.html">Áreas de actuación</a>
+                    <a href="#" class="dropdown">Áreas de actuación</a>
+                    <ul class="dropdown-list">
+                        <li>
+                            <a href="https://www.aepd.es/areas/internet/index.html">Internet y redes sociales</a>
+                        </li>
+                        <li>
+                            <a href="https://www.aepd.es/areas/telecomunicaciones/index.html">Reclamaciones de telecomunicaciones</a>
+                        </li>
+                        <li>
+                            <a href="https://www.aepd.es/areas/publicidad/index.html">Publicidad no deseada</a>
+                        </li>
+                        <li>
+                            <a href="http://www.tudecideseninternet.es/agpd1/" target="_blank" title="" rel="noopener">Educación y menores</a>
+                        </li>
+                        <li>
+                            <a href="https://www.aepd.es/areas/videovigilancia/index.html">Videovigilancia</a>
+                        </li>
+                        <li>
+                            <a href="https://www.aepd.es/areas/ue/index.html">Proyectos europeos</a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
-                    <a href="./static/ficha.html">Informes y resoluciones</a>
+                    <a href="#" class="dropdown">Informes y resoluciones</a>
+                    <ul class="dropdown-list">
+                        <li>
+                            <a href="https://www.aepd.es/normativa/index.html">Normativa</a>
+                        </li>
+                        <li>
+                            <a href="https://www.aepd.es/informes/index.html">Informes</a>
+                        </li>
+                        <li>
+                            <a href="https://www.aepd.es/resoluciones/index.html">Resoluciones</a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
-                    <a href="./static/ficha.html">Guías y herramientas</a>
+                    <a href="#" class="dropdown">Guías y herramientas</a>
+                    <ul class="dropdown-list">
+                        <li>
+                            <a href="https://www.aepd.es/guias/index.html">Guías</a>
+                        </li>
+                        <li>
+                            <a href="https://www.aepd.es/herramientas/index.html">Herramientas</a>
+                        </li>
+                        <li>
+                            <a href="https://www.aepd.es/infografias/index.html">Infografias</a>
+                        </li>
+                        <li>
+                            <a href="https://www.aepd.es/videos/index.html">Videos</a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
-                    <a href="./static/ficha.html">Internacional</a>
-                </li>
-                <li>
-                    <a href="./static/ficha.html">Prensa y comunicación</a>
+                    <a href="#" class="dropdown">Prensa y comunicación</a>
+                    <ul class="dropdown-list">
+                        <li>
+                            <a href="https://www.aepd.es/comunicacion/prensa/index.php">Notas de prensa</a>
+                        </li>
+                        <li>
+                            <a href="https://www.aepd.es/blog/index.html">Blog</a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </nav>
     </header>
     <script>
         window.$search = {
-            src: "https://api.agpd.es/api/v1",
-            type: "Xfind",
-            section: "prensa",
-            static: false
+            src: "https://api.aepd.es/api/v1",
+            type: "Legals",
+            filters: {
+                type: 'informes_historicos'
+            }
         };
     </script>
     <main>

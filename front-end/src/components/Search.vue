@@ -19,12 +19,14 @@
             Buscar
         </button>
         <button
+            v-if="toggleable"
             @click="advanced"
         >
             Avanzado
         </button>
         <button
             @click="clean"
+            class="simple"
         >
             Limpiar
         </button>
@@ -32,6 +34,8 @@
 </template>
 
 <script>
+const TOGGLEABLE = false;
+
 export default {
     name: 'search',
     props: {
@@ -45,7 +49,8 @@ export default {
     data() {
         return {
             lastSearch: '',
-            search: this.current
+            search: this.current,
+            toggleable: TOGGLEABLE
         };
     },
     methods: {

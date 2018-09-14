@@ -31,10 +31,7 @@ import Search from './Search';
 import SearchParams from './SearchParams';
 import Filters from './Filters';
 
-const title =
-    !isNil(window.$search.static) && window.$search.static
-        ? window.$search.static
-        : '';
+const TOGGLEABLE = false;
 
 export default {
     name: 'finder',
@@ -57,15 +54,15 @@ export default {
     data() {
         return {
             lastSearch: '',
-            title: title,
-            advanced: false,
+            title: this.$search.isStatic(''),
+            advanced: !TOGGLEABLE && !this.$search.isStatic(),
             params: {},
             searchParams: {}
         };
     },
     computed: {
         hasSearch() {
-            return this.title === '';
+            return !this.$search.isStatic();
         }
     },
     methods: {
@@ -114,7 +111,7 @@ export default {
     mounted() {
         const urlWindow = new URL(window.location.href);
         this.lastSearch =
-            title === '' ? urlWindow.searchParams.get('search') : '';
+            this.hasSearch ? urlWindow.searchParams.get('search') : '';
     }
 };
 </script>
