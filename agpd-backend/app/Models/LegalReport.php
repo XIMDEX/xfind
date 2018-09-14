@@ -14,11 +14,14 @@ class LegalReport extends Item
         'state' => ['type' => 'string', 'required' => true, 'values' => ['publish']],
         'content_flat' => ['type' => 'string', 'required' => false],
         'content' => ['type' => 'string', 'required' => false],
+        'pdf_content' => ['type' => 'string', 'required' => false],
 
         'title' => ['type' => 'string', 'required' => false],
         'pages' => ['type' => 'string', 'required' => false],
 
         'date' => ['type' => 'string', 'required' => true],
+        'year' => ['type' => 'string', 'required' => true],
+        
         'code' => ['type' => 'string', 'required' => false],
         'theme' => ['type' => 'string', 'required' => false],
         'subtheme' => ['type' => 'string', 'required' => false],
@@ -41,14 +44,16 @@ class LegalReport extends Item
 
     private $historicalFacets = [
         'theme',
-        'subtheme',
-        'date'
+        //'subtheme',
+        // 'date',
+        'year'
     ];
 
     private $mandatoryFacets = [
         'administration',
         'normative_range',
-        'date'
+        // 'date',
+        'year'
     ];
 
     public function __construct()

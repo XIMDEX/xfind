@@ -25,7 +25,7 @@ class LegalReportsController extends ItemController
 
         $data['date'] = DateHelpers::parse($data['date']);
 
-        $data['content'] = implode(' ', [$data['name'], $data['title'] ?? '', $data['code'] ?? '', $data['content_flat'] ?? '']);
+        $data['content'] = implode(' ', [$data['name'], $data['title'] ?? '', $data['code'] ?? '', $data['pdf_content'] ?? '', $data['content_flat'] ?? '']);
 
         parent::prepareData($data);
         return $data;
