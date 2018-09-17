@@ -5,17 +5,22 @@ import Options from './Options';
 
 export default class Date extends Options {
     isYear(string) {
-        let result;
+        let result = false;
         if (Array.isArray(string)) {
             result = [];
             for (let key in string) {
-                result.push(moment(string[key], ['YYYY', 'Y', 'YY']).isValid());
+                if (string[key].length > 0 && string[key].length < 5) {
+                    result.push(moment(string[key], ['YYYY', 'Y', 'YY']).isValid());
+                    continue;
+                }
+                result.push(false);
             }
-        } else {
+        } else if (string.length > 0 && string.length < 5) {
             result = moment(string, ['YYYY', 'Y', 'YY']).isValid();
         }
         return result;
     }
+
     parse(date, format = null) {
         if (isNil(format)) {
             format = this._formatDate.toUpperCase();
