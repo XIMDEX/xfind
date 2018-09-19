@@ -12,6 +12,7 @@ class Item
     protected $start = 0;
     protected $query = '*:*';
     protected $sort = [];
+    protected $facetSort = 'index';
 
     protected static $rules = [
         'id' => ['type' => 'string', 'required' => true],
@@ -153,6 +154,17 @@ class Item
         return $this->sort;
     }
 
+    public function setFacetSort(string $facetSort) : Item
+    {
+        $this->facetSort = $facetSort;
+        return $this;
+    }
+
+    public function getFacetSort() : string
+    {
+        return $this->facetSort;
+    }
+
     public function facets(array $facets = null)
     {
         if (is_null($facets)) {
@@ -174,8 +186,17 @@ class Item
             ->selectQuery($query)
             ->sort($sort);
 
-        foreach ($this->facets as $facet) {
-            $this->facetField($facet, $facet);
+        foreach ($this->facets as $key => $value) {
+            if (is_array($value)) {
+                $facet = $value['facet'] ?? false;
+                $field = $value['field'] ?? $facet;
+                $sort = $value['sort'] ?? $this->getFacetSort();
+            } else {
+                $facet = $value;
+                $field = $value;
+                $sort = $this->getFacetSort();
+            }
+            $this->facetField($facet, $field, $sort);
         }
 
         return $this;
@@ -245,9 +266,9 @@ class Item
         return $this->solarium->test();
     }
 
-    public function facetField($facet, $field)
+    public function facetField($facet, $field, $sort = 'index')
     {
-        $this->solarium->facetField($facet, $field);
+        $this->solarium->facetField($facet, $field, $sort);
         return $this;
     }
 

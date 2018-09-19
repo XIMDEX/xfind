@@ -4,6 +4,8 @@ namespace App\Models;
 
 class LegalReport extends Item
 {
+    protected $facetSort = 'count';
+
     public static $rules = [
         'name' => ['type' => 'string', 'required' => true],
         'slug' => ['type' => 'string', 'required' => true],
@@ -44,16 +46,19 @@ class LegalReport extends Item
 
     private $historicalFacets = [
         'theme',
-        //'subtheme',
-        // 'date',
-        'year'
+        [
+            'facet' => 'year',
+            'sort' => 'index'
+        ]
     ];
 
     private $mandatoryFacets = [
         'administration',
         'normative_range',
-        // 'date',
-        'year'
+        [
+            'facet' => 'year',
+            'sort' => 'index'
+        ]
     ];
 
     public function __construct()

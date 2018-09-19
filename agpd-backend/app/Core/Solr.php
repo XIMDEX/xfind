@@ -190,13 +190,13 @@ class Solr extends Client
         return $this;
     }
 
-    public function facetField($facet, $field)
+    public function facetField($facet, $field, $order = 'index')
     {
         $this->query->getFacetSet()
             ->createFacetField($facet)
             ->setField($field)
-            ->setSort('index')
-            ->setLimit(-1);;
+            ->setSort($order)
+            ->setLimit(-1);
         return $this;
     }
 }
