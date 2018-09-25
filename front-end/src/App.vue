@@ -148,6 +148,13 @@ export default {
 
             this.submitSearch(data, false);
         },
+        _prepareData(data) {
+            if (is(String, data) && (!data.startsWith('"') && !data.endsWith('"'))) {
+                data = data.split(' ').join(' AND ');
+            }
+
+            return data;
+        },
         submitSearch(data = '', resetPages = true) {
             const _type = types[this.$search.get('type')];
             const route = this.$search.route(_type);
@@ -156,7 +163,7 @@ export default {
             let last = data;
             this.query = {
                 exclude: true,
-                content: `*${data}*`
+                content: `(${this._prepareData(data)})`
             };
 
             if (resetPages) {
@@ -165,7 +172,8 @@ export default {
 
             if (is(Object, data)) {
                 last = data.current;
-                this.query.content = `*${data.current}*`;
+
+                this.query.content = `(${this._prepareData(data.current)})`;
                 let filters = data.filters;
                 this.filters = filters;
 
