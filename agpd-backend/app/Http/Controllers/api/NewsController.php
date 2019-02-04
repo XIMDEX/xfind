@@ -65,15 +65,21 @@ class NewsController extends ItemController
 
     protected function prepareData(&$data)
     {
-        $data = array_merge($data, $data['content-payload']);
-        unset($data['content-payload']);
+        if(isset( $data['content-payload'])){
+            $data = array_merge($data, $data['content-payload']);
+            unset($data['content-payload']);
+        }
+
         if (isset($data['@attributes'])) {
             $data = array_merge($data['@attributes'], $data);
             unset($data['@attributes']);
         }
 
-        $date = strtotime($data['date']);
-        $date = date('Y-m-d H:i:s', $date);
+        $date = null;
+        if(isset($data['date'])){
+            $date = strtotime($data['date']);
+            $date = date('Y-m-d H:i:s', $date);
+        }
 
         if (isset($data['tags']) && !is_array($data['tags'])) {
             $data['tags'] = [$data['tags']];
