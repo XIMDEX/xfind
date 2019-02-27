@@ -12,6 +12,27 @@ class NewsController extends ItemController
     /** @var News */
     protected $model = News::class;
 
+    public function index(){
+        $data = parent::index();
+
+        // Clean title from content
+        foreach ($data['docs'] as &$doc){
+            $title = $doc['name'];
+            if(isset($doc['content_flat']) && !is_null($doc['content_flat'])){
+                $content =  preg_replace('/\s+/', ' ', trim($doc['content_flat']));;
+                if(starts_with($content, $title)){
+                    $content = trim(substr($content, strlen($title)));
+                    if(starts_with($content,".")){
+                        $content = trim(substr($content,1));
+                    }
+                    $doc['content_flat'] = $content;
+                    $doc['content'] = $content;
+                }
+            }
+        }
+
+        return $data;
+    }
     public function show($slug)
     {
         $slug = str_replace('@@_@@', '/', $slug);
@@ -65,15 +86,21 @@ class NewsController extends ItemController
 
     protected function prepareData(&$data)
     {
-        $data = array_merge($data, $data['content-payload']);
-        unset($data['content-payload']);
+        if(isset( $data['content-payload'])){
+            $data = array_merge($data, $data['content-payload']);
+            unset($data['content-payload']);
+        }
+
         if (isset($data['@attributes'])) {
             $data = array_merge($data['@attributes'], $data);
             unset($data['@attributes']);
         }
 
-        $date = strtotime($data['date']);
-        $date = date('Y-m-d H:i:s', $date);
+        $date = null;
+        if(isset($data['date'])){
+            $date = strtotime($data['date']);
+            $date = date('Y-m-d H:i:s', $date);
+        }
 
         if (isset($data['tags']) && !is_array($data['tags'])) {
             $data['tags'] = [$data['tags']];
