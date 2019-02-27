@@ -1,8 +1,0 @@
-{
-    "name": "ximdex/router",
-    "type": "project",
-    "require": {
-        "delight-im/router": "^3.1",
-        "guzzlehttp/guzzle": "~6.0"
-    }
-}
