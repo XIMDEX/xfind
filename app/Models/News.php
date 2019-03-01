@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Xfind\Models\Item;
+
 class News extends Item
 {
     const TYPE = 'Xnews';
@@ -25,35 +27,32 @@ class News extends Item
         'content'
     ];
 
+
+    protected $filterFields = [
+        'lang',
+        'author',
+        'date',
+        'tags',
+        'author',
+        'type',
+        'section'
+    ];
+
     public function __construct()
     {
-        $this->fields = array_merge($this->fields, [
-            'slug',
-            'author',
-            'content_flat',
-            'content_render',
-            'date',
-            'id_section',
-            'id_ximdex',
-            'name',
-            'image',
-            'section',
-            'state',
-            'tags',
-            'type',
-            'lang',
-            'content'
-        ]);
-
-        $this->facets = array_merge($this->facets, [
+        static::$facets = array_merge(static::$facets, [
             'author',
             'date',
             'tags'
         ]);
-
         static::$rules = array_merge(static::$rules, parent::$rules);
-
         parent::__construct();
+        
+        $this->fields = array_merge($this->fields, [
+            'section',
+            'type',
+            'content'
+        ]);
     }
 
     public function find($query = null, array $sort = [])
@@ -63,9 +62,6 @@ class News extends Item
         }
 
         $sort = array_merge($sort, ['date' => 'desc'], $this->sort);
-
-        $query = "($query) AND type:" . static::TYPE;
-
         return parent::find($query, $sort);
     }
 }

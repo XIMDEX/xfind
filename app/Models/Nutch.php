@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Xfind\Models\Item;
+
 class Nutch extends Item
 {
     protected $fields = [
@@ -18,6 +20,12 @@ class Nutch extends Item
     ];
 
     protected $facets = [
+        'author',
+        'date',
+        'tags'
+    ];
+
+    protected $filterFields = [
         'author',
         'date',
         'tags'

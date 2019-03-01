@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Models\News;
 use Illuminate\Http\Request;
 use App\Core\Utils\ArrayHelpers;
+use Xfind\Http\Controllers\api\ItemController;
 
 class NewsController extends ItemController
 {
@@ -12,18 +13,19 @@ class NewsController extends ItemController
     /** @var News */
     protected $model = News::class;
 
-    public function index(){
+    public function index()
+    {
         $data = parent::index();
 
         // Clean title from content
-        foreach ($data['docs'] as &$doc){
+        foreach ($data['docs'] as &$doc) {
             $title = $doc['name'];
-            if(isset($doc['content_flat']) && !is_null($doc['content_flat'])){
-                $content =  preg_replace('/\s+/', ' ', trim($doc['content_flat']));;
-                if(starts_with($content, $title)){
+            if (isset($doc['content_flat']) && !is_null($doc['content_flat'])) {
+                $content =  preg_replace('/\s+/', ' ', trim($doc['content_flat']));
+                if (starts_with($content, $title)) {
                     $content = trim(substr($content, strlen($title)));
-                    if(starts_with($content,".")){
-                        $content = trim(substr($content,1));
+                    if (starts_with($content, ".")) {
+                        $content = trim(substr($content, 1));
                     }
                     $doc['content_flat'] = $content;
                     $doc['content'] = $content;
@@ -86,7 +88,7 @@ class NewsController extends ItemController
 
     protected function prepareData(&$data)
     {
-        if(isset( $data['content-payload'])){
+        if (isset($data['content-payload'])) {
             $data = array_merge($data, $data['content-payload']);
             unset($data['content-payload']);
         }
@@ -97,7 +99,7 @@ class NewsController extends ItemController
         }
 
         $date = null;
-        if(isset($data['date'])){
+        if (isset($data['date'])) {
             $date = strtotime($data['date']);
             $date = date('Y-m-d H:i:s', $date);
         }

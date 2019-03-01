@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Models\Resolutions;
 use App\Core\Utils\DateHelpers;
+use Xfind\Http\Controllers\api\ItemController;
 
 class resolutionController extends ItemController
 {

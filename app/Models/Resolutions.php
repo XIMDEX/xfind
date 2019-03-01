@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Xfind\Models\Item;
+
 class Resolutions extends Item
 {
     const TYPE = 'Resolution';
@@ -38,8 +40,34 @@ class Resolutions extends Item
         'content'
     ];
 
+    protected $filterFields = [
+        'date',
+        'gravity_law',
+        'resolution_number',
+        'code_procedure',
+        'type_procedure',
+        'activity_group',
+        'province_denounced',
+        'theme',
+        'inflicted_item',
+        'recurred',
+        'author',
+        'type',
+    ];
+
     public function __construct()
     {
+        static::$facets = array_merge(static::$facets, [
+            'gravity_law',
+            'inflicted_item',
+            'type_procedure',
+            'activity_group',
+            'date'
+        ]);
+
+        static::$rules = array_merge(static::$rules, parent::$rules);
+        parent::__construct();
+
         $this->fields = array_merge($this->fields, [
             'name',
             'slug',
@@ -61,18 +89,6 @@ class Resolutions extends Item
             'author',
             'type'
         ]);
-
-        $this->facets = array_merge($this->facets, [
-            'gravity_law',
-            'inflicted_item',
-            'type_procedure',
-            'activity_group',
-            'date'
-        ]);
-
-        static::$rules = array_merge(static::$rules, parent::$rules);
-
-        parent::__construct();
     }
 
     public function find($query = null, array $sort = [])

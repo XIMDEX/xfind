@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Xfind\Models\Item;
+
 class LegalReport extends Item
 {
     protected $facetSort = 'count';
@@ -39,6 +41,20 @@ class LegalReport extends Item
         'content'
     ];
 
+    protected $filterFields = [
+        'language',
+        'author',
+        'norm_type',
+        'normative_range',
+        'administration',
+        'subtheme',
+        'theme',
+        'code',
+        'type',
+        'date',
+        'year'
+    ];
+
     private $legalTypes = [
         'informes_historicos' => 'historicalFacets',
         'informes_preceptivos' => 'mandatoryFacets'
@@ -64,11 +80,10 @@ class LegalReport extends Item
     public function __construct()
     {
         $fields = array_keys(static::$rules);
-        $this->fields = array_merge($this->fields, $fields);
-
         static::$rules = array_merge(static::$rules, parent::$rules);
-
         parent::__construct();
+
+        $this->fields = array_merge($this->fields, $fields);
     }
 
     public function find($query = null, array $sort = [])
@@ -83,7 +98,7 @@ class LegalReport extends Item
             $tmp = explode(':', $field);
             if ($tmp[0] === 'type') {
                 $type = $this->legalTypes[$tmp[1]] ?? '';
-                $this->facets = array_merge($this->facets, $this->$type);
+                static::$facets = array_merge(static::$facets, $this->$type);
                 break;
             }
         }

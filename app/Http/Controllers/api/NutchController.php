@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Models\Nutch;
+use Xfind\Http\Controllers\api\ItemController;
 
 class NutchController extends ItemController
 {
