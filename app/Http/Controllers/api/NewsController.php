@@ -4,7 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Models\News;
 use Illuminate\Http\Request;
-use App\Core\Utils\ArrayHelpers;
+use Xfind\Core\Utils\ArrayHelpers;
 use Xfind\Http\Controllers\api\ItemController;
 
 class NewsController extends ItemController
@@ -108,7 +108,7 @@ class NewsController extends ItemController
             $data['tags'] = [$data['tags']];
         }
 
-        $data['lang'] = ArrayHelpers::getProperty($data, 'language', '');
+        $data['lang'] = strtolower(ArrayHelpers::getProperty($data, 'language', ''));
         $data['date'] = $date;
 
         $data['type'] = 'Xnews';
