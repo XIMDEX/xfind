@@ -12,7 +12,7 @@ class NutchController extends ItemController
     protected $model = Nutch::class;
 
     protected const MAP = [
-        'language' => 'lang'
+        'lang' => 'language'
     ];
 
     public function __construct()

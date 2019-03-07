@@ -8,18 +8,20 @@ class Nutch extends Item
 {
     protected $fields = [
         'id',
+        'date',
         'tstamp',
         'anchor',
         'title',
         'url',
-        'content'
+        'content',
+        'language'
     ];
 
     protected $highlight_fields = [
         'content'
     ];
 
-    protected $facets = [
+    protected static $facets = [
         'author',
         'date',
         'tags'
@@ -28,8 +30,18 @@ class Nutch extends Item
     protected $filterFields = [
         'author',
         'date',
-        'tags'
+        'tags',
+        'language'
     ];
+
+
+    public function addFilter(string $query, string $name = null)
+    {
+        if ($name === 'language') {
+            $query = "-({$name}:[* TO *] OR -{$query})";
+        }
+        return parent::addFilter($query, $name);
+    }
 
     public function find($query = null, array $sort = [])
     {
