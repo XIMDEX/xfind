@@ -50,9 +50,6 @@ class Nutch extends Item
         }
 
         $sort = array_merge($sort, ['date' => 'desc'], $this->sort);
-
-        $query = (strpos('content:', $query) != -1) ? $query : "($query) AND content:*";
-
         return parent::find($query, $sort);
     }
 }

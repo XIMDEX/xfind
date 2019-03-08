@@ -36,6 +36,14 @@ class Resolutions extends Item
         'type' => ['type' => 'string', 'required' => false]
     ];
 
+    protected static $facets = [
+        'gravity_law',
+        'inflicted_item',
+        'type_procedure',
+        'activity_group',
+        'date'
+    ];
+
     protected $highlight_fields = [
         'content'
     ];
@@ -55,52 +63,15 @@ class Resolutions extends Item
         'type',
     ];
 
-    public function __construct()
-    {
-        static::$facets = array_merge(static::$facets, [
-            'gravity_law',
-            'inflicted_item',
-            'type_procedure',
-            'activity_group',
-            'date'
-        ]);
-
-        static::$rules = array_merge(static::$rules, parent::$rules);
-        parent::__construct();
-
-        $this->fields = array_merge($this->fields, [
-            'name',
-            'slug',
-            'section',
-            'state',
-            'content_flat',
-            'content',
-            'title',
-            'pages',
-            'date',
-            'gravity_law',
-            'resolution_number',
-            'code_procedure',
-            'type_procedure',
-            'activity_group',
-            'theme',
-            'inflicted_item',
-            'recurred',
-            'author',
-            'type'
-        ]);
-    }
-
     public function find($query = null, array $sort = [])
     {
         if (is_null($query)) {
             $query = $this->query;
         }
 
+        $this->addFilter('type:(' . static::TYPE . ')', 'type');
+
         $sort = array_merge($sort, ['date' => 'desc'], $this->sort);
-
-        $query = "($query) AND type:" . static::TYPE;
-
         return parent::find($query, $sort);
     }
 }
