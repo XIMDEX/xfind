@@ -6,7 +6,7 @@ use App\Models\Resolutions;
 use Xfind\CoreUtils\DateHelpers;
 use Xfind\Http\Controllers\api\ItemController;
 
-class resolutionController extends ItemController
+class ResolutionController extends ItemController
 {
     /** @var News */
     protected $model = Resolutions::class;

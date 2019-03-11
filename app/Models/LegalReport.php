@@ -62,29 +62,14 @@ class LegalReport extends Item
 
     private $historicalFacets = [
         'theme',
-        [
-            'facet' => 'year',
-            'sort' => 'index'
-        ]
+        'year',
     ];
 
     private $mandatoryFacets = [
         'administration',
         'normative_range',
-        [
-            'facet' => 'year',
-            'sort' => 'index'
-        ]
+        'year'
     ];
-
-    public function __construct()
-    {
-        $fields = array_keys(static::$rules);
-        static::$rules = array_merge(static::$rules, parent::$rules);
-        parent::__construct();
-
-        $this->fields = array_merge($this->fields, $fields);
-    }
 
     public function find($query = null, array $sort = [])
     {
@@ -92,20 +77,21 @@ class LegalReport extends Item
             $query = $this->query;
         }
 
+        $filters = $this->getFilters();
         $type = '';
-        $fields = explode(' AND ', $query);
-        foreach ($fields as $field) {
-            $tmp = explode(':', $field);
+        foreach ($filters as $filter) {
+            $tmp = explode(':', $filter);
             if ($tmp[0] === 'type') {
-                $type = $this->legalTypes[$tmp[1]] ?? '';
+                $type = $this->legalTypes[trim($tmp[1], '()')] ?? null;
+                if (is_null($type)) {
+                    continue;
+                }
                 static::$facets = array_merge(static::$facets, $this->$type);
                 break;
             }
         }
 
         $sort = array_merge($sort, ['date' => 'desc'], $this->sort);
-
-        $query = "($query)";
         return parent::find($query, $sort);
     }
 }
