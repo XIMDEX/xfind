@@ -76,5 +76,5 @@ Route::group([
         ]);
     });
 
-    Route::get('v1/xfind', ['as' => 'web.index', 'uses' => 'NutchController@index']);
+    Route::get('xfind', ['as' => 'web.index', 'uses' => 'NutchController@index']);
 });
