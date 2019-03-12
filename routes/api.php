@@ -14,10 +14,8 @@
 Route::group([
     'as' => 'api.',
     'prefix' => 'v1',
-    'namespace' => 'App\Http\Controllers\api'
+    'namespace' => 'api'
 ], function () {
-    Route::get('', ['as' => 'v1', 'uses' => 'ItemController@index']);
-
     Route::group([
         'as' => 'noticias.',
         'prefix' => 'noticias'
