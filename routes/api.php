@@ -1,8 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,19 +11,72 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::group([
+    'as' => 'api.',
+    'prefix' => 'v1',
+    'namespace' => 'App\Http\Controllers\api'
+], function () {
+    Route::get('', ['as' => 'v1', 'uses' => 'ItemController@index']);
 
-Route::get('v1', ['as' => 'api', 'uses' => 'api\ItemController@index']);
-Route::get('v1/noticias', ['as' => 'api.noticias', 'uses' => 'api\NewsController@index']);
-//Route::post('v1/noticias/create', ['as' => 'api', 'uses' => 'api\NewsController@create']);
-Route::post('v1/noticias', ['as' => 'api.noticias.create', 'uses' => 'api\NewsController@update']);
-Route::put('v1/noticias', ['as' => 'api.noticias.update', 'uses' => 'api\NewsController@update']);
-Route::get('v1/noticias/{slug}', ['as.noticias.show' => 'api', 'uses' => 'api\NewsController@show']);
-Route::delete('v1/noticias/{id}', ['as.noticias.delete' => 'api', 'uses' => 'api\NewsController@delete']);
+    Route::group([
+        'as' => 'noticias.',
+        'prefix' => 'noticias'
+    ], function () {
+        Route::get('', [
+            'as' => 'index',
+            'uses' => 'NewsController@index'
+        ]);
 
-Route::get('v1/resolutions', ['as' => 'api.resolutions', 'uses' => 'api\resolutionController@index']);
-Route::post('v1/resolutions', ['as' => 'api.resolutions.create', 'uses' => 'api\resolutionController@update']);
+        Route::post('', [
+            'as' => 'create',
+            'uses' => 'NewsController@update'
+        ]);
 
-Route::get('v1/legal_reports', ['as' => 'api.legal_reports', 'uses' => 'api\LegalReportsController@index']);
-Route::post('v1/legal_reports', ['as' => 'api.legal_reports.create', 'uses' => 'api\LegalReportsController@update']);
+        Route::put('', [
+            'as' => 'update',
+            'uses' => 'NewsController@update'
+        ]);
 
-Route::get('v1/xfind', ['as' => 'api.web.index', 'uses' => 'api\NutchController@index']);
+        Route::get('{slug}', [
+            'as' => 'show',
+            'uses' => 'NewsController@show'
+        ]);
+
+        Route::delete('{id}', [
+            'as' => 'delete',
+            'uses' => 'NewsController@delete'
+        ]);
+    });
+
+    Route::group([
+        'as' => 'resolutions',
+        'prefix' => 'resolutions'
+    ], function () {
+        Route::get('', [
+            'as' => 'index',
+            'uses' => 'ResolutionController@index'
+        ]);
+
+        Route::post('', [
+            'as' => 'create',
+            'uses' => 'ResolutionController@update'
+        ]);
+    });
+
+    Route::group([
+        'as' => 'legal_reports',
+        'prefix' => 'legal_reports'
+    ], function () {
+        Route::get('', [
+            'as' => 'index',
+            'uses' => 'LegalReportsController@index'
+        ]);
+
+        Route::post('', [
+            'as' => 'create',
+            'uses' => 'LegalReportsController@update'
+        ]);
+    });
+
+    Route::get('v1/xfind', ['as' => 'web.index', 'uses' => 'NutchController@index']);
+});
