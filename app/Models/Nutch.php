@@ -26,8 +26,8 @@ class Nutch extends Item
 
     protected static $facets = [
         'author',
-        'date',
-        'tags'
+        'tags',
+        'date'
     ];
 
     protected $filterFields = [
