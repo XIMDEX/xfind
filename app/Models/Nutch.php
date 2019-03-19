@@ -14,6 +14,9 @@ class Nutch extends Item
         'title',
         'url',
         'content',
+        'author',
+        'date',
+        'tags',
         'language'
     ];
 
@@ -29,9 +32,9 @@ class Nutch extends Item
 
     protected $filterFields = [
         'author',
-        'date',
         'tags',
-        'language'
+        'language',
+        'date'
     ];
 
 
