@@ -4,9 +4,9 @@ namespace App\Http\Controllers\api;
 
 use App\Models\LegalReport;
 use Xfind\CoreUtils\DateHelpers;
-use Xfind\Http\Controllers\api\ItemController;
+use App\Http\Controllers\Controller as BaseController;
 
-class LegalReportsController extends ItemController
+class LegalReportsController extends BaseController
 {
     /** @var News */
     protected $model = LegalReport::class;

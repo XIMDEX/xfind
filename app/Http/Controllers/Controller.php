@@ -2,12 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Xfind\Http\Controllers\api\ItemController;
 
-class Controller extends BaseController
+class Controller extends ItemController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    public function index()
+    {
+        $data = parent::index();
+
+        // Clean title from content
+        foreach ($data['docs'] as &$doc) {
+            $title = $doc['name'];
+            if (isset($doc['content_flat']) && !is_null($doc['content_flat'])) {
+                $content =  preg_replace('/\s+/', ' ', trim($doc['content_flat']));
+                if (starts_with($content, $title)) {
+                    $content = trim(substr($content, strlen($title)));
+                    if (starts_with($content, ".")) {
+                        $content = trim(substr($content, 1));
+                    }
+                    $doc['content_flat'] = $content;
+                    $doc['content'] = $content;
+                }
+            }
+        }
+
+        return $data;
+    }
 }

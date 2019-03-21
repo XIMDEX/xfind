@@ -4,9 +4,9 @@ namespace App\Http\Controllers\api;
 
 use App\Models\Resolutions;
 use Xfind\CoreUtils\DateHelpers;
-use Xfind\Http\Controllers\api\ItemController;
+use App\Http\Controllers\Controller as BaseController;
 
-class ResolutionController extends ItemController
+class ResolutionController extends BaseController
 {
     /** @var News */
     protected $model = Resolutions::class;

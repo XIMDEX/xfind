@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\api;
 
 use App\Models\Nutch;
-use Xfind\Http\Controllers\api\ItemController;
+use App\Http\Controllers\Controller as BaseController;
 
-class NutchController extends ItemController
+class NutchController extends BaseController
 {
 
     /** @var Nutch */
@@ -24,7 +24,7 @@ class NutchController extends ItemController
 
     public function index()
     {
-        $data = $this->model->find()->highlight()->paginate();
+        $data = parent::index();
 
         foreach ($data['docs'] as $index => $docs) {
             $update = false;
