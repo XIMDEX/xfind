@@ -12,7 +12,8 @@ class Controller extends ItemController
 
         // Clean title from content
         foreach ($data['docs'] as &$doc) {
-            $title = trim($doc['name']) ?? '';
+            $title = $doc['name'] ?? '';
+	    $title = trim($title);
             if (isset($doc['content_flat']) && !is_null($doc['content_flat'])) {
                 $content =  preg_replace('/\s+/', ' ', trim($doc['content_flat']));
                 if (starts_with($content, $title)) {
