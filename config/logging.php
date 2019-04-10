@@ -76,6 +76,13 @@ return [
             'driver' => 'errorlog',
             'level' => 'debug',
         ],
+
+        'error_news' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/error_news.log'),
+            'level' => 'debug',
+            'days' => 30,
+        ],
     ],
 
 ];

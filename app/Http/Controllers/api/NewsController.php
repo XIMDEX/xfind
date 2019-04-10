@@ -5,7 +5,9 @@ namespace App\Http\Controllers\api;
 use App\Models\News;
 use Illuminate\Http\Request;
 use Xfind\Core\Utils\ArrayHelpers;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller as BaseController;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class NewsController extends BaseController
 {
@@ -52,6 +54,8 @@ class NewsController extends BaseController
             $res = $result ? ['updated', 200] : ['fail', 400];
         } else {
             $res = [json_encode(['errors' => $errors]), 400];
+            $document =  array_key_exists('id', $data) ? "document with id {$data['id']} and " : '';
+            Log::channel('error_news')->error("Failed to index: {$document}errors: " . implode('; ', $errors));
         }
 
         return response($res[0], $res[1]);
@@ -59,8 +63,17 @@ class NewsController extends BaseController
 
     public function delete($id)
     {
-        $result = $this->model->delete($id);
+        try {
+            $result = $this->model->delete($id);
+        } catch (ModelNotFoundException $e) {
+            $result = false;
+        }
+        
         $res = $result ? ['deleted', 200] : ['fail', 400];
+
+        if (!$result) {
+            Log::channel('error_news')->error("Failed to delete: document with id: {$id}");
+        }
         return response($res[0], $res[1]);
     }
 
