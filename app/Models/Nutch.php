@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Xfind\Models\Item;
+use Illuminate\Support\Carbon;
 
 class Nutch extends Item
 {
@@ -42,6 +43,27 @@ class Nutch extends Item
     {
         if ($name === 'language') {
             $query = "-({$name}:[* TO *] OR -{$query})";
+        }
+
+        if ($name === 'date') {
+            $dates = str_replace([
+                'date:',
+                '(',
+                ')',
+                '[',
+                ']'
+            ], '', $query);
+
+            $dates = explode('TO', $dates);
+
+            foreach ($dates as &$date) {
+                $date = trim($date);
+            }
+
+            $dates[count($dates) - 1] = Carbon::parse($dates[count($dates) - 1])
+                ->endOfMonth()
+                ->format('Y-m-d\T00:00:00\Z');
+            $query = 'date:([' . implode(' TO ', $dates) . '])';
         }
         return parent::addFilter($query, $name);
     }
